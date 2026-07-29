@@ -25,7 +25,7 @@ const publicSans = Public_Sans({
   display: "swap",
 });
 
-const siteUrl = "https://www.penabarcelonistalahabana.example.cu";
+const siteUrl = "https://penabarcelonista-habana-cuba.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

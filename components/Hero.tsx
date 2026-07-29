@@ -69,14 +69,14 @@ export function Hero() {
               <p className="text-xs uppercase tracking-wide text-white/70">Años de historia</p>
             </div>
             <div>
-              <dt className="sr-only">Socios activos</dt>
-              <dd className="font-eyebrow text-3xl font-bold text-dorado">+300</dd>
-              <p className="text-xs uppercase tracking-wide text-white/70">Socios activos</p>
+              <dt className="sr-only">Seguidores en redes</dt>
+              <dd className="font-eyebrow text-3xl font-bold text-dorado">+2.200</dd>
+              <p className="text-xs uppercase tracking-wide text-white/70">Seguidores en redes</p>
             </div>
             <div>
-              <dt className="sr-only">Encuentros al año</dt>
-              <dd className="font-eyebrow text-3xl font-bold text-dorado">+40</dd>
-              <p className="text-xs uppercase tracking-wide text-white/70">Encuentros al año</p>
+              <dt className="sr-only">Peña Oficial FCB</dt>
+              <dd className="font-eyebrow text-3xl font-bold text-dorado">#1063</dd>
+              <p className="text-xs uppercase tracking-wide text-white/70">Peña Oficial FCB</p>
             </div>
           </dl>
         </div>

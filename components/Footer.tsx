@@ -10,23 +10,15 @@ const socialIcons: Record<string, ReactElement> = {
   instagram: (
     <path d="M12 2c2.7 0 3 0 4.1.1 1.1.1 1.8.2 2.4.5.7.3 1.2.6 1.7 1.1.5.5.9 1 1.1 1.7.3.6.4 1.3.5 2.4.1 1.1.1 1.4.1 4.1s0 3-.1 4.1c-.1 1.1-.2 1.8-.5 2.4-.3.7-.6 1.2-1.1 1.7-.5.5-1 .9-1.7 1.1-.6.3-1.3.4-2.4.5-1.1.1-1.4.1-4.1.1s-3 0-4.1-.1c-1.1-.1-1.8-.2-2.4-.5-.7-.3-1.2-.6-1.7-1.1-.5-.5-.9-1-1.1-1.7-.3-.6-.4-1.3-.5-2.4C2 15 2 14.7 2 12s0-3 .1-4.1c.1-1.1.2-1.8.5-2.4.3-.7.6-1.2 1.1-1.7.5-.5 1-.9 1.7-1.1.6-.3 1.3-.4 2.4-.5C9 2 9.3 2 12 2zm0 5a5 5 0 100 10 5 5 0 000-10zm0 8.2a3.2 3.2 0 110-6.4 3.2 3.2 0 010 6.4zm5.2-8.4a1.2 1.2 0 100-2.4 1.2 1.2 0 000 2.4z" />
   ),
-  twitter: (
-    <path d="M21 5.9c-.7.3-1.5.6-2.3.7a4 4 0 001.8-2.2c-.8.5-1.6.8-2.6 1a4 4 0 00-6.8 3.6A11.4 11.4 0 013 4.7a4 4 0 001.2 5.3c-.6 0-1.2-.2-1.7-.5v.1a4 4 0 003.2 4 4 4 0 01-1.8.1 4 4 0 003.7 2.8A8 8 0 012 18.4a11.3 11.3 0 006.1 1.8c7.3 0 11.3-6.1 11.3-11.3v-.5c.8-.6 1.4-1.3 1.9-2.1z" />
-  ),
-  youtube: (
-    <path d="M22 12s0-3.1-.4-4.6a2.8 2.8 0 00-2-2C17.9 5 12 5 12 5s-5.9 0-7.6.4a2.8 2.8 0 00-2 2C2 8.9 2 12 2 12s0 3.1.4 4.6c.2 1 1 1.8 2 2C6.1 19 12 19 12 19s5.9 0 7.6-.4a2.8 2.8 0 002-2C22 15.1 22 12 22 12zM10 15V9l5.2 3-5.2 3z" />
-  ),
-  tiktok: (
-    <path d="M14 2h3a5.5 5.5 0 004 4v3a8.5 8.5 0 01-4-1v6.5A6.5 6.5 0 1110.5 8v3a3.5 3.5 0 103.5 3.5V2z" />
+  website: (
+    <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.6c-.1-2-.5-3.8-1.1-5.2A8 8 0 0119.9 11zM12 4.1c.8 1.1 1.7 3.3 1.9 5.9h-3.8c.2-2.6 1.1-4.8 1.9-5.9zM4.1 13h3.6c.1 2 .5 3.8 1.1 5.2A8 8 0 014.1 13zm0-2a8 8 0 014.7-7.2c-.6 1.4-1 3.2-1.1 5.2H4.1zM10.1 13h3.8c-.2 2.6-1.1 4.8-1.9 5.9-.8-1.1-1.7-3.3-1.9-5.9zm5.2 5.2c.6-1.4 1-3.2 1.1-5.2h3.6a8 8 0 01-4.7 5.2z" />
   ),
 };
 
 const socialLabels: Record<string, string> = {
   facebook: "Facebook",
   instagram: "Instagram",
-  twitter: "X (Twitter)",
-  youtube: "YouTube",
-  tiktok: "TikTok",
+  website: "Web oficial",
 };
 
 export function Footer() {
@@ -80,7 +72,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2 text-sm">
               <li>{siteConfig.address}</li>
               <li>{siteConfig.email}</li>
-              <li>{siteConfig.whatsapp}</li>
+              <li>{siteConfig.phone}</li>
             </ul>
           </div>
         </div>
@@ -89,7 +81,7 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} {siteConfig.name}. Todos los derechos reservados.
           </p>
-          <p>Peña de aficionados independiente · No afiliada oficialmente al FC Barcelona.</p>
+          <p>{siteConfig.officialNumber} · Miembro de la Confederación Mundial de Peñas del FC Barcelona.</p>
         </div>
       </Container>
     </footer>

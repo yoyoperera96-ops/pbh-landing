@@ -95,8 +95,9 @@ en el log del servidor. Antes de producción, conecta ese endpoint a:
   configurados en `app/layout.tsx`.
 - `sitemap.ts` y `robots.ts` generados dinámicamente.
 - Fuentes cargadas con `next/font` (sin bloqueo de renderizado).
-- Antes de publicar, actualiza `siteUrl` en `app/layout.tsx`, `app/sitemap.ts` y
-  `app/robots.ts` con el dominio real.
+- `siteUrl` en `app/layout.tsx`, `app/sitemap.ts` y `app/robots.ts` apunta a
+  `https://penabarcelonista-habana-cuba.vercel.app`. Si más adelante se conecta
+  un dominio propio, actualízalo en los tres archivos.
 
 ## 7. Arquitectura pensada para crecer
 

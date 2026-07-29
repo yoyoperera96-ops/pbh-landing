@@ -1,29 +1,34 @@
 // -----------------------------------------------------------------------------
 // Fuente única de contenido para la landing de la Peña Barcelonista de La Habana.
-// Todo el texto marcado como "ejemplo" debe ser validado/sustituido por la Junta
-// Directiva de la PBH antes de publicar. Ver README para la guía de reemplazo.
+// Datos históricos (fundación, registro legal, sede, directiva) verificados en
+// penyabarcelonistahavana.wordpress.com (páginas "La Penya", "Junta Directiva" y
+// "Contáctenos") y en las redes oficiales de la Peña, julio 2026. El resto del
+// texto (beneficios, FAQ, eventos) es contenido editorial y debe ser validado
+// por la Junta Directiva antes de publicar. Ver README para la guía de reemplazo.
 // -----------------------------------------------------------------------------
 
 export const siteConfig = {
   name: "Peña Barcelonista de La Habana",
   shortName: "PBH",
+  officialNumber: "Peña Oficial FCB #1063",
   foundedYear: 1996,
+  registeredDate: "5 de febrero de 2001",
   anniversaryYear: 2026,
   anniversaryLabel: "30 Aniversario",
   city: "La Habana, Cuba",
+  founder: "Artur Cabré",
   tagline: "Más que una peña, una familia culé.",
   brandConcept: "Una casa culé, treinta años en el corazón de Cuba.",
   description:
-    "La Peña Barcelonista de La Habana (PBH) reúne desde 1996 a los seguidores del FC Barcelona en Cuba. Únete a casi 30 años de pasión, tradición y comunidad blaugrana.",
-  email: "info@penabarcelonistalahabana.example.cu",
-  whatsapp: "+53 5xxx xxxx",
-  address: "La Habana, Cuba",
+    "La Peña Barcelonista de La Habana (PBH), Peña Oficial #1063 del FC Barcelona, reúne desde 1996 a los seguidores del club en Cuba. Únete a casi 30 años de pasión, tradición y comunidad blaugrana.",
+  email: "p.barcelonista.lahabana@gmail.com",
+  phone: "+53 7 863 7589",
+  address:
+    "Sociedad de Beneficencia de Naturales de Cataluña, Calle Consulado #68 e/ Genios y Refugio, Centro Habana, CP 10200, La Habana, Cuba",
   social: {
-    facebook: "https://facebook.com/penabarcelonistalahabana",
-    instagram: "https://instagram.com/pbh_lahabana",
-    twitter: "https://x.com/pbh_lahabana",
-    youtube: "https://youtube.com/@pbhlahabana",
-    tiktok: "https://tiktok.com/@pbh_lahabana",
+    facebook: "https://www.facebook.com/PenyaBarcelonistaLaHabanaCuba/",
+    instagram: "https://www.instagram.com/penyabhavana/",
+    website: "https://penyabarcelonistahavana.wordpress.com/",
   },
 };
 
@@ -38,37 +43,31 @@ export const timeline: TimelineItem[] = [
     year: "1996",
     title: "Fundación de la Peña",
     description:
-      "Un grupo de aficionados culés se reúne por primera vez en La Habana para ver los partidos del Barça y decide fundar la Peña Barcelonista de La Habana.",
+      "Artur Cabré, empresario catalán, funda la Peña Barcelonista de La Habana junto a un grupo de empresarios y aficionados azulgranas residentes en la ciudad.",
   },
   {
     year: "2001",
-    title: "Primeros socios oficiales",
+    title: "Registro oficial",
     description:
-      "La peña formaliza su membresía y comienza a organizar encuentros regulares para ver los partidos en conjunto en distintas sedes de la ciudad.",
+      "El 5 de febrero la Peña se registra legalmente con el nombre de \"Peña Barcelonista de La Habana\", con sede en la histórica Sociedad de Beneficencia de Naturales de Cataluña (fundada en 1840).",
   },
   {
-    year: "2009",
-    title: "El año del sextete",
+    year: "2013",
+    title: "Título de Liga celebrado en La Habana",
     description:
-      "La afición cubana al Barça se dispara con la generación del Guardiola. La PBH triplica su número de socios activos.",
+      "La directiva de la Peña viaja al Camp Nou para el Trofeo Gamper y se reúne con Joan Laporta, mientras los socios celebran en Cuba el título de Liga 2012-13.",
   },
   {
-    year: "2014",
-    title: "Nueva sede social",
+    year: "2015",
+    title: "El escudo de la Peña llega al Camp Nou",
     description:
-      "La peña estrena una sede fija para sus encuentros, con transmisiones en pantalla grande y actividades para toda la familia culé.",
+      "Bajo la presidencia de Pep Gaya, se instala el escudo de la Peña Barcelonista de La Habana en el Camp Nou, un reconocimiento a su trayectoria.",
   },
   {
-    year: "2018",
-    title: "Alianza con peñas internacionales",
+    year: "2020s",
+    title: "Reactivación digital",
     description:
-      "La PBH se conecta con otras peñas barcelonistas de Latinoamérica y España, sumándose a la red global de aficionados del club.",
-  },
-  {
-    year: "2022",
-    title: "Renovación digital",
-    description:
-      "La peña lanza sus redes sociales oficiales y comienza a documentar su historia y actividades para las nuevas generaciones de socios.",
+      "La Peña reactiva su presencia en redes sociales para captar nuevas generaciones de socios dentro y fuera de Cuba.",
   },
   {
     year: "2026",
@@ -144,7 +143,16 @@ export type Testimonial = {
   quote: string;
 };
 
+// El testimonio de Ernesto es real, tomado de un comentario público en la web
+// oficial de la Peña (2013). Los otros dos son ejemplo — sustituir por citas
+// reales de socios actuales antes de publicar.
 export const testimonials: Testimonial[] = [
+  {
+    name: "Ernesto V.",
+    memberSince: "Socio de la Peña",
+    quote:
+      "También soy miembro de la Peña desde hace unos años. Quería aprovechar y saludarlos a través de esta página. Visca Barça, señores.",
+  },
   {
     name: "Carlos M.",
     memberSince: "Socio desde 2005",
@@ -156,12 +164,6 @@ export const testimonials: Testimonial[] = [
     memberSince: "Socia desde 2016",
     quote:
       "Entré por el fútbol y me quedé por la familia que encontré. La PBH te recibe con los brazos abiertos desde el primer día.",
-  },
-  {
-    name: "Alejandro P.",
-    memberSince: "Socio desde 2011",
-    quote:
-      "Casi 30 años de historia se sienten en cada reunión. Ser socio es sentirte parte de algo más grande que un equipo de fútbol.",
   },
 ];
 
@@ -225,7 +227,7 @@ export const faqs: FaqItem[] = [
   {
     question: "¿La Peña tiene relación oficial con el FC Barcelona?",
     answer:
-      "La PBH es una peña de aficionados independiente. Funciona como comunidad de seguidores del club en Cuba, no como entidad oficial del FC Barcelona.",
+      "Sí. La PBH es la Peña Oficial #1063 del FC Barcelona, reconocida por la Confederación Mundial de Peñas del club, y cada socio recibe su carné oficial de peñista.",
   },
   {
     question: "¿Cómo recibo el carné de socio?",

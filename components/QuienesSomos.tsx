@@ -15,29 +15,33 @@ export function QuienesSomos() {
           />
           <div className="mt-6 space-y-5 text-tinta/75">
             <p>
-              La <strong className="text-tinta">{siteConfig.name}</strong> nació en{" "}
-              {siteConfig.foundedYear} de la mano de un grupo de aficionados que
-              decidió transformar su pasión individual por el FC Barcelona en un
-              proyecto colectivo: un espacio para vivir cada partido en comunidad.
+              La <strong className="text-tinta">{siteConfig.name}</strong> fue
+              fundada en noviembre de {siteConfig.foundedYear} por el empresario
+              catalán <strong className="text-tinta">{siteConfig.founder}</strong>,
+              primer presidente, junto a un grupo de empresarios y aficionados
+              azulgranas residentes en la ciudad. El {siteConfig.registeredDate} quedó
+              registrada oficialmente con su nombre actual.
             </p>
             <p>
-              Desde entonces, generación tras generación de socios ha mantenido
-              viva la tradición culé en La Habana, organizando encuentros,
-              actividades y celebraciones que han convertido a la peña en un
-              referente del barcelonismo cubano.
+              Somos la <strong className="text-tinta">{siteConfig.officialNumber}</strong>,
+              reconocida por la Confederación Mundial de Peñas del FC Barcelona. Nuestra
+              sede está en la Sociedad de Beneficencia de Naturales de Cataluña, en
+              Centro Habana — la más antigua de su tipo en el mundo, fundada en 1840.
             </p>
             <p>
-              Hoy, a las puertas de nuestro <strong className="text-tinta">30 aniversario</strong>,
-              seguimos creciendo con la misma esencia de siempre: pasión,
-              tradición y sentido de pertenencia, abriendo las puertas a nuevas
-              generaciones de socios.
+              En 2015, bajo la presidencia de Pep Gaya, el escudo de la Peña se
+              instaló en el Camp Nou. Hoy, a las puertas de nuestro{" "}
+              <strong className="text-tinta">30 aniversario</strong>, seguimos
+              creciendo con la misma esencia de siempre: pasión, tradición y
+              sentido de pertenencia, abriendo las puertas a nuevas generaciones
+              de socios.
             </p>
           </div>
 
           <div className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3">
             {[
               { label: "Fundación", value: String(siteConfig.foundedYear) },
-              { label: "Sede", value: "La Habana" },
+              { label: "Peña Oficial", value: "#1063" },
               { label: "Aniversario", value: "30 años" },
             ].map((item) => (
               <div key={item.label} className="rounded-2xl border border-tinta/10 p-4 text-center">

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = "https://www.penabarcelonistalahabana.example.cu";
+  const siteUrl = "https://penabarcelonista-habana-cuba.vercel.app";
 
   return [
     {
