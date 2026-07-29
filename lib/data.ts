@@ -235,18 +235,16 @@ export const faqs: FaqItem[] = [
 ];
 
 export type GalleryItem = {
+  image: string;
   caption: string;
 };
 
-// Placeholders de galería: sustituir por fotografías reales de actividades,
-// encuentros y socios de la peña (ver README > "Reemplazar assets de marca").
 export const gallery: GalleryItem[] = [
-  { caption: "Encuentro de socios viendo un Clásico" },
-  { caption: "Celebración de un título liguero" },
-  { caption: "Actividad familiar de la peña" },
-  { caption: "Sede social de la PBH" },
-  { caption: "Entrega de carnés a nuevos socios" },
-  { caption: "Torneo interno de fútbol 5" },
-  { caption: "Aniversario de la fundación" },
-  { caption: "Comunidad culé de La Habana" },
+  { image: "/images/galeria/galeria-01.jpg", caption: "Celebración de un título con la afición" },
+  { image: "/images/galeria/galeria-02.jpg", caption: "Abrazo entre socios tras la victoria" },
+  { image: "/images/galeria/galeria-03.jpg", caption: "La bandera de la Peña en cada celebración" },
+  { image: "/images/galeria/galeria-04.jpg", caption: "Recibimiento a los jugadores" },
+  { image: "/images/galeria/galeria-05.jpg", caption: "Familias culés de varias generaciones" },
+  { image: "/images/galeria/galeria-06.jpg", caption: "Trofeo conquistado por el equipo de la peña" },
+  { image: "/images/galeria/galeria-07.jpg", caption: "Selfie de celebración entre socios" },
 ];

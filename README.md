@@ -56,22 +56,23 @@ El Manual de Identidad Visual oficial de la PBH ya está implementado:
   Azul Barça `#1D4D91`, Grana `#9C1C3A`, Oro Habana `#F0B429`, Blanco Hueso `#FAF6EE`.
 - **Tipografías** (`app/layout.tsx` + `app/globals.css`): Spectral (titulares),
   Oswald (eyebrows/cifras), Public Sans (texto).
-- **Logo 30 Aniversario** (`components/AnniversaryBadge.tsx`): círculo bicolor
-  azul/grana sobre anillo dorado, según sección 05 del manual.
 - **Valores de marca** (`components/Valores.tsx` + `lib/data.ts` > `brandValues`):
   los 6 valores oficiales (Pasión, Pertenencia, Tradición, Comunidad, Elegancia,
   Profesionalismo).
 - **Fechas**: fundación 1996, 30 Aniversario 2026 (`lib/data.ts` > `siteConfig`).
 
-Pendiente de asset real (el archivo del manual supera el límite de 256KB de la
-herramienta de importación de diseño, así que hay que colocarlo a mano):
+Assets reales ya colocados en `public/images/`:
 
-| Elemento | Archivo a modificar |
-| --- | --- |
-| Escudo oficial de la PBH | Colocar el PNG en `public/images/escudo-pbh.png` y sustituir `components/ShieldPlaceholder.tsx` por `<Image src="/images/escudo-pbh.png">` en Header, Hero, QuienesSomos, Galeria y Footer |
-| Foto de fondo del Hero | `components/Hero.tsx` (sección con comentario "Imagen de fondo provisional") |
-| Fotos de la galería | `components/Galeria.tsx` + `lib/data.ts` (`gallery`) |
-| Imagen Open Graph / favicon | `public/images/og-cover.jpg`, `public/favicon.ico` |
+| Archivo | Uso | Componente |
+| --- | --- | --- |
+| `escudo-pbh.png` | Escudo oficial de la PBH | `components/Escudo.tsx` |
+| `logo-30-aniversario.png` | Logotipo 30 Aniversario (solo cifra) | `components/AnniversaryLogo.tsx` |
+| `logo-30-aniversario-wordmark.png` | Versión del logo con nombre debajo (sin usar aún) | — |
+| `hero-bg.jpg` | Foto de fondo del Hero | `components/Hero.tsx` |
+| `galeria/galeria-01.jpg` … `07.jpg` | Fotos reales de la afición | `components/Galeria.tsx` + `lib/data.ts` (`gallery`) |
+
+Pendiente: imagen Open Graph (`public/images/og-cover.jpg`, 1200×630) y favicon
+(`public/favicon.ico`) — usar el escudo o el logo del 30 aniversario como base.
 
 Todo el **texto de contenido** (historia, línea de tiempo, beneficios, testimonios,
 eventos, preguntas frecuentes, redes sociales, correo/WhatsApp de contacto) vive en

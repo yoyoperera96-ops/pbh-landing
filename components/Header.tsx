@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ShieldPlaceholder } from "./ShieldPlaceholder";
+import { Escudo } from "./Escudo";
 import { Container } from "./ui/Container";
 
 const links = [
@@ -32,7 +32,7 @@ export function Header() {
     >
       <Container className="flex h-16 items-center justify-between md:h-20">
         <a href="#top" className="flex items-center gap-3">
-          <ShieldPlaceholder className="h-9 w-8 md:h-10 md:w-9" />
+          <Escudo className="h-9 w-9 md:h-10 md:w-10" />
           <span className="font-display text-lg font-semibold leading-none text-white md:text-xl">
             Peña Barcelonista
             <span className="block font-eyebrow text-xs font-medium tracking-widest text-dorado">

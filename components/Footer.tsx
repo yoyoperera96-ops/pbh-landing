@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { ShieldPlaceholder } from "./ShieldPlaceholder";
+import { Escudo } from "./Escudo";
 import { Container } from "./ui/Container";
 import { siteConfig } from "@/lib/data";
 
@@ -36,7 +36,7 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-2">
             <div className="flex items-center gap-3">
-              <ShieldPlaceholder className="h-10 w-9" />
+              <Escudo className="h-10 w-10" />
               <span className="font-display text-lg font-semibold text-white">
                 {siteConfig.name}
               </span>

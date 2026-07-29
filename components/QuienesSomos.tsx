@@ -1,6 +1,6 @@
+import Image from "next/image";
 import { Container } from "./ui/Container";
 import { SectionHeading } from "./ui/SectionHeading";
-import { ShieldPlaceholder } from "./ShieldPlaceholder";
 import { siteConfig } from "@/lib/data";
 
 export function QuienesSomos() {
@@ -50,12 +50,14 @@ export function QuienesSomos() {
 
         <div className="relative flex justify-center">
           <div className="absolute -inset-6 rounded-[2rem] bg-blaugrana-gradient opacity-90 blur-2xl" aria-hidden />
-          <div className="relative flex aspect-square w-full max-w-md flex-col items-center justify-center gap-6 rounded-[2rem] bg-tinta p-10 text-center shadow-card">
-            <ShieldPlaceholder className="h-32 w-28" />
-            <p className="max-w-xs text-sm text-white/70">
-              Espacio reservado para foto institucional o mosaico de socios de la
-              PBH (reemplazar por asset real).
-            </p>
+          <div className="relative aspect-square w-full max-w-md overflow-hidden rounded-[2rem] shadow-card">
+            <Image
+              src="/images/galeria/galeria-05.jpg"
+              alt="Un socio de la PBH con su hijo, familia culé de varias generaciones"
+              fill
+              sizes="400px"
+              className="object-cover"
+            />
           </div>
         </div>
       </Container>

@@ -1,23 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Container } from "./ui/Container";
 import { SectionHeading } from "./ui/SectionHeading";
-import { ShieldPlaceholder } from "./ShieldPlaceholder";
 import { gallery } from "@/lib/data";
-
-// Mosaicos de gradiente como placeholder visual. Sustituir cada tile por
-// <Image src="/images/galeria/xx.jpg" .../> con fotos reales (ver README).
-const gradients = [
-  "from-grana to-tinta",
-  "from-blau to-tinta",
-  "from-dorado/80 to-grana",
-  "from-tinta to-blau",
-  "from-grana to-blau",
-  "from-blau-dark to-dorado/60",
-  "from-grana-dark to-tinta",
-  "from-tinta to-grana",
-];
 
 export function Galeria() {
   const [active, setActive] = useState<number | null>(null);
@@ -34,15 +21,20 @@ export function Galeria() {
         <div className="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {gallery.map((item, index) => (
             <button
-              key={item.caption}
+              key={item.image}
               onClick={() => setActive(index)}
-              className={`group relative aspect-square overflow-hidden rounded-2xl bg-gradient-to-br ${gradients[index % gradients.length]} shadow-card`}
+              className="group relative aspect-square overflow-hidden rounded-2xl shadow-card"
             >
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-4 text-center opacity-90 transition group-hover:opacity-100">
-                <ShieldPlaceholder className="h-10 w-9 opacity-80" />
-                <span className="text-xs font-medium text-white/85">{item.caption}</span>
+              <Image
+                src={item.image}
+                alt={item.caption}
+                fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                className="object-cover transition duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/70 via-black/0 to-black/0 p-4 opacity-0 transition group-hover:opacity-100">
+                <span className="text-xs font-medium text-white">{item.caption}</span>
               </div>
-              <div className="absolute inset-0 bg-black/0 transition group-hover:bg-black/10" />
             </button>
           ))}
         </div>
@@ -54,11 +46,19 @@ export function Galeria() {
           onClick={() => setActive(null)}
         >
           <div
-            className={`relative flex aspect-video w-full max-w-2xl flex-col items-center justify-center gap-4 rounded-2xl bg-gradient-to-br ${gradients[active % gradients.length]} p-10 text-center shadow-card`}
+            className="relative flex max-h-[85vh] w-full max-w-2xl flex-col items-center gap-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <ShieldPlaceholder className="h-16 w-14" />
-            <p className="text-white">{gallery[active].caption}</p>
+            <div className="relative aspect-video w-full overflow-hidden rounded-2xl shadow-card">
+              <Image
+                src={gallery[active].image}
+                alt={gallery[active].caption}
+                fill
+                sizes="700px"
+                className="object-cover"
+              />
+            </div>
+            <p className="text-center text-white">{gallery[active].caption}</p>
             <button
               onClick={() => setActive(null)}
               className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white"
