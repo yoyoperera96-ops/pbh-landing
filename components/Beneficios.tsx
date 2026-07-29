@@ -42,7 +42,7 @@ function BenefitIcon({ icon }: { icon: Benefit["icon"] }) {
 
 export function Beneficios() {
   return (
-    <section id="beneficios" className="bg-white py-24">
+    <section id="beneficios" className="bg-hueso py-24">
       <Container>
         <SectionHeading
           eyebrow="Ventajas de ser socio"
@@ -59,7 +59,7 @@ export function Beneficios() {
               <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-blaugrana-gradient text-dorado">
                 <BenefitIcon icon={benefit.icon} />
               </div>
-              <h3 className="mt-5 font-display text-xl font-bold uppercase text-tinta">
+              <h3 className="mt-5 font-eyebrow text-xl font-bold uppercase text-tinta">
                 {benefit.title}
               </h3>
               <p className="mt-2 text-sm text-tinta/70">{benefit.description}</p>

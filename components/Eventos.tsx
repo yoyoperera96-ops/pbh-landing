@@ -19,10 +19,10 @@ export function Eventos() {
               key={event.title}
               className="flex flex-col rounded-2xl border border-white/10 bg-white/5 p-7"
             >
-              <span className="inline-flex w-fit items-center rounded-full bg-dorado/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-dorado">
+              <span className="inline-flex w-fit items-center rounded-full bg-dorado/15 px-3 py-1 font-eyebrow text-xs font-semibold uppercase tracking-wide text-dorado">
                 {event.date}
               </span>
-              <h3 className="mt-4 font-display text-xl font-bold uppercase text-white">
+              <h3 className="mt-4 font-eyebrow text-xl font-bold uppercase text-hueso">
                 {event.title}
               </h3>
               <p className="mt-2 flex-1 text-sm text-white/70">{event.description}</p>

@@ -31,13 +31,13 @@ const socialLabels: Record<string, string> = {
 
 export function Footer() {
   return (
-    <footer className="bg-black py-16 text-white/70">
+    <footer className="bg-tinta py-16 text-white/70">
       <Container>
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-2">
             <div className="flex items-center gap-3">
               <ShieldPlaceholder className="h-10 w-9" />
-              <span className="font-display text-lg font-bold uppercase text-white">
+              <span className="font-display text-lg font-semibold text-white">
                 {siteConfig.name}
               </span>
             </div>
@@ -61,7 +61,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-display text-sm font-bold uppercase tracking-wide text-white">
+            <h3 className="font-eyebrow text-sm font-bold uppercase tracking-wide text-white">
               Navegación
             </h3>
             <ul className="mt-4 space-y-2 text-sm">
@@ -74,7 +74,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-display text-sm font-bold uppercase tracking-wide text-white">
+            <h3 className="font-eyebrow text-sm font-bold uppercase tracking-wide text-white">
               Contacto
             </h3>
             <ul className="mt-4 space-y-2 text-sm">

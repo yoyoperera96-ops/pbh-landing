@@ -17,7 +17,7 @@ export function SectionHeading({
     >
       {eyebrow && (
         <span
-          className={`mb-3 inline-block rounded-full border px-4 py-1 text-xs font-semibold uppercase tracking-widest ${
+          className={`mb-3 inline-block rounded-full border px-4 py-1 font-eyebrow text-xs font-semibold uppercase tracking-widest ${
             light
               ? "border-dorado/50 text-dorado"
               : "border-grana/30 bg-grana/5 text-grana"
@@ -27,8 +27,8 @@ export function SectionHeading({
         </span>
       )}
       <h2
-        className={`font-display text-3xl font-bold uppercase tracking-tight text-balance sm:text-4xl md:text-5xl ${
-          light ? "text-white" : "text-tinta"
+        className={`font-display text-3xl font-semibold text-balance sm:text-4xl md:text-5xl ${
+          light ? "text-hueso" : "text-tinta"
         }`}
       >
         {title}

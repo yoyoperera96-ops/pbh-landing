@@ -1,18 +1,27 @@
 import type { Metadata } from "next";
-import { Inter, Barlow_Condensed } from "next/font/google";
+import { Spectral, Oswald, Public_Sans } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/data";
 
-const inter = Inter({
+const spectral = Spectral({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-spectral",
   display: "swap",
 });
 
-const barlow = Barlow_Condensed({
+const oswald = Oswald({
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-barlow",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-oswald",
+  display: "swap",
+});
+
+const publicSans = Public_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-public-sans",
   display: "swap",
 });
 
@@ -82,7 +91,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="es" className={`${inter.variable} ${barlow.variable}`}>
+    <html lang="es" className={`${spectral.variable} ${oswald.variable} ${publicSans.variable}`}>
       <body>
         <script
           type="application/ld+json"

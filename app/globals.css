@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --font-display: var(--font-barlow);
-  --font-body: var(--font-inter);
+  --font-display: var(--font-spectral);
+  --font-body: var(--font-public-sans);
+  --font-eyebrow: var(--font-oswald);
 }
 
 html {
@@ -12,7 +13,7 @@ html {
 }
 
 body {
-  @apply bg-white text-tinta font-body antialiased;
+  @apply bg-hueso text-tinta font-body antialiased;
 }
 
 ::selection {

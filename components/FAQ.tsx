@@ -17,7 +17,7 @@ export function FAQ() {
           description="Resolvemos las preguntas más comunes sobre la membresía en la PBH."
         />
 
-        <div className="mt-12 divide-y divide-tinta/10 rounded-2xl border border-tinta/10 bg-white">
+        <div className="mt-12 divide-y divide-tinta/10 rounded-2xl border border-tinta/10 bg-hueso">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
@@ -27,7 +27,7 @@ export function FAQ() {
                   className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-display text-base font-bold uppercase text-tinta sm:text-lg">
+                  <span className="font-eyebrow text-base font-bold uppercase text-tinta sm:text-lg">
                     {faq.question}
                   </span>
                   <span

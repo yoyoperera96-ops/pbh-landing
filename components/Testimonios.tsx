@@ -4,7 +4,7 @@ import { testimonials } from "@/lib/data";
 
 export function Testimonios() {
   return (
-    <section className="bg-white py-24">
+    <section className="bg-hueso py-24">
       <Container>
         <SectionHeading
           eyebrow="Voces de la peña"
@@ -16,7 +16,7 @@ export function Testimonios() {
           {testimonials.map((testimonial) => (
             <figure
               key={testimonial.name}
-              className="flex flex-col justify-between rounded-2xl border border-tinta/10 bg-white p-7 shadow-card"
+              className="flex flex-col justify-between rounded-2xl border border-tinta/10 bg-hueso p-7 shadow-card"
             >
               <svg
                 viewBox="0 0 32 24"
@@ -29,7 +29,7 @@ export function Testimonios() {
                 “{testimonial.quote}”
               </blockquote>
               <figcaption className="mt-6 border-t border-tinta/10 pt-4">
-                <p className="font-display text-lg font-bold uppercase text-tinta">
+                <p className="font-eyebrow text-lg font-bold uppercase text-tinta">
                   {testimonial.name}
                 </p>
                 <p className="text-sm text-grana">{testimonial.memberSince}</p>

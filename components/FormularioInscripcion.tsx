@@ -36,7 +36,7 @@ export function FormularioInscripcion() {
   }
 
   return (
-    <section id="inscripcion" className="bg-white py-24">
+    <section id="inscripcion" className="bg-hueso py-24">
       <Container className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div>
           <SectionHeading
@@ -67,7 +67,7 @@ export function FormularioInscripcion() {
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-grana/10 text-2xl text-grana">
                 ✓
               </div>
-              <h3 className="font-display text-xl font-bold uppercase text-tinta">
+              <h3 className="font-eyebrow text-xl font-bold uppercase text-tinta">
                 ¡Solicitud enviada!
               </h3>
               <p className="max-w-sm text-sm text-tinta/70">

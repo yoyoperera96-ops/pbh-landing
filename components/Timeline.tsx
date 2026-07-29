@@ -31,11 +31,11 @@ export function Timeline() {
                     aria-hidden
                   />
                   <div className={`${isEven ? "md:pr-14 md:text-right" : "md:pl-14 md:order-2"}`}>
-                    <span className="font-display text-2xl font-bold text-dorado">{item.year}</span>
+                    <span className="font-eyebrow text-2xl font-bold text-dorado">{item.year}</span>
                   </div>
                   <div className={`${isEven ? "md:pl-14" : "md:order-1 md:pr-14 md:text-right"}`}>
                     <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                      <h3 className="font-display text-lg font-bold uppercase text-white">
+                      <h3 className="font-eyebrow text-lg font-bold uppercase text-hueso">
                         {item.title}
                       </h3>
                       <p className="mt-2 text-sm text-white/70">{item.description}</p>

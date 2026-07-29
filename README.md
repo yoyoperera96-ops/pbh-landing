@@ -48,16 +48,27 @@ lib/data.ts          Todo el contenido editable (historia, beneficios, testimoni
 public/images/       Carpeta para assets reales (ver README interno)
 ```
 
-## 4. Reemplazar assets de marca (IMPORTANTE)
+## 4. Manual de marca
 
-Todo el diseño actual usa una **paleta e íconos provisionales** (blaugrana + dorado)
-mientras llega el Manual de Marca oficial. Cuando lo tengas, actualiza:
+El Manual de Identidad Visual oficial de la PBH ya está implementado:
+
+- **Colores institucionales** (`tailwind.config.ts` > `colors`): Marino `#142C54`,
+  Azul Barça `#1D4D91`, Grana `#9C1C3A`, Oro Habana `#F0B429`, Blanco Hueso `#FAF6EE`.
+- **Tipografías** (`app/layout.tsx` + `app/globals.css`): Spectral (titulares),
+  Oswald (eyebrows/cifras), Public Sans (texto).
+- **Logo 30 Aniversario** (`components/AnniversaryBadge.tsx`): círculo bicolor
+  azul/grana sobre anillo dorado, según sección 05 del manual.
+- **Valores de marca** (`components/Valores.tsx` + `lib/data.ts` > `brandValues`):
+  los 6 valores oficiales (Pasión, Pertenencia, Tradición, Comunidad, Elegancia,
+  Profesionalismo).
+- **Fechas**: fundación 1996, 30 Aniversario 2026 (`lib/data.ts` > `siteConfig`).
+
+Pendiente de asset real (el archivo del manual supera el límite de 256KB de la
+herramienta de importación de diseño, así que hay que colocarlo a mano):
 
 | Elemento | Archivo a modificar |
 | --- | --- |
-| Colores oficiales de marca | `tailwind.config.ts` (objeto `colors`) |
-| Escudo de la PBH | `components/ShieldPlaceholder.tsx` (o sustituir por `<Image src="/images/escudo-pbh.svg">`) |
-| Logo del 30 aniversario | `components/AnniversaryBadge.tsx` |
+| Escudo oficial de la PBH | Colocar el PNG en `public/images/escudo-pbh.png` y sustituir `components/ShieldPlaceholder.tsx` por `<Image src="/images/escudo-pbh.png">` en Header, Hero, QuienesSomos, Galeria y Footer |
 | Foto de fondo del Hero | `components/Hero.tsx` (sección con comentario "Imagen de fondo provisional") |
 | Fotos de la galería | `components/Galeria.tsx` + `lib/data.ts` (`gallery`) |
 | Imagen Open Graph / favicon | `public/images/og-cover.jpg`, `public/favicon.ico` |

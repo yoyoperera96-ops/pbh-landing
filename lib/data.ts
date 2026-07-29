@@ -7,13 +7,14 @@
 export const siteConfig = {
   name: "Peña Barcelonista de La Habana",
   shortName: "PBH",
-  foundedYear: 1997,
-  anniversaryYear: 2027,
+  foundedYear: 1996,
+  anniversaryYear: 2026,
   anniversaryLabel: "30 Aniversario",
   city: "La Habana, Cuba",
   tagline: "Más que una peña, una familia culé.",
+  brandConcept: "Una casa culé, treinta años en el corazón de Cuba.",
   description:
-    "La Peña Barcelonista de La Habana (PBH) reúne desde 1997 a los seguidores del FC Barcelona en Cuba. Únete a casi 30 años de pasión, tradición y comunidad blaugrana.",
+    "La Peña Barcelonista de La Habana (PBH) reúne desde 1996 a los seguidores del FC Barcelona en Cuba. Únete a casi 30 años de pasión, tradición y comunidad blaugrana.",
   email: "info@penabarcelonistalahabana.example.cu",
   whatsapp: "+53 5xxx xxxx",
   address: "La Habana, Cuba",
@@ -34,13 +35,13 @@ export type TimelineItem = {
 
 export const timeline: TimelineItem[] = [
   {
-    year: "1997",
+    year: "1996",
     title: "Fundación de la Peña",
     description:
       "Un grupo de aficionados culés se reúne por primera vez en La Habana para ver los partidos del Barça y decide fundar la Peña Barcelonista de La Habana.",
   },
   {
-    year: "2002",
+    year: "2001",
     title: "Primeros socios oficiales",
     description:
       "La peña formaliza su membresía y comienza a organizar encuentros regulares para ver los partidos en conjunto en distintas sedes de la ciudad.",
@@ -52,29 +53,44 @@ export const timeline: TimelineItem[] = [
       "La afición cubana al Barça se dispara con la generación del Guardiola. La PBH triplica su número de socios activos.",
   },
   {
-    year: "2015",
+    year: "2014",
     title: "Nueva sede social",
     description:
       "La peña estrena una sede fija para sus encuentros, con transmisiones en pantalla grande y actividades para toda la familia culé.",
   },
   {
-    year: "2019",
+    year: "2018",
     title: "Alianza con peñas internacionales",
     description:
       "La PBH se conecta con otras peñas barcelonistas de Latinoamérica y España, sumándose a la red global de aficionados del club.",
   },
   {
-    year: "2023",
+    year: "2022",
     title: "Renovación digital",
     description:
       "La peña lanza sus redes sociales oficiales y comienza a documentar su historia y actividades para las nuevas generaciones de socios.",
   },
   {
-    year: "2027",
+    year: "2026",
     title: "30 Aniversario",
     description:
       "La PBH celebra tres décadas de barcelonismo en Cuba con un logotipo conmemorativo, nueva imagen institucional y esta plataforma digital.",
   },
+];
+
+export type BrandValue = {
+  n: string;
+  title: string;
+};
+
+// Los 6 valores de marca del Manual de Identidad Visual PBH (sección 03 — ADN de la marca).
+export const brandValues: BrandValue[] = [
+  { n: "01", title: "Pasión" },
+  { n: "02", title: "Pertenencia" },
+  { n: "03", title: "Tradición" },
+  { n: "04", title: "Comunidad" },
+  { n: "05", title: "Elegancia" },
+  { n: "06", title: "Profesionalismo" },
 ];
 
 export type Benefit = {
@@ -166,7 +182,7 @@ export const events: EventItem[] = [
   },
   {
     title: "Celebración 30 Aniversario PBH",
-    date: "2027",
+    date: "2026 · Fecha por confirmar",
     location: "Sede PBH, La Habana",
     description:
       "Gran fiesta conmemorativa por los 30 años de la Peña Barcelonista de La Habana, con invitados especiales e historia de la peña.",

@@ -1,8 +1,8 @@
 import type { Config } from "tailwindcss";
 
-// Paleta provisional inspirada en el escudo del FC Barcelona (blaugrana) + dorado
-// conmemorativo del 30 aniversario. Sustituir por los valores exactos en cuanto
-// llegue el Manual de Marca de la PBH (ver README > "Reemplazar assets de marca").
+// Paleta y tipografía oficiales del Manual de Identidad Visual PBH (v1),
+// importado desde Claude Design. Colores institucionales: Marino, Azul Barça,
+// Grana, Oro Habana y Blanco Hueso — ver sección 08 del manual para Pantone/CMYK.
 const config: Config = {
   content: [
     "./app/**/*.{ts,tsx}",
@@ -13,33 +13,35 @@ const config: Config = {
     extend: {
       colors: {
         blau: {
-          DEFAULT: "#004D98",
-          light: "#0A5FB4",
-          dark: "#002B57",
+          DEFAULT: "#1D4D91", // Azul Barça · Pantone 293 C
+          light: "#3C6AAE",
+          dark: "#163B6E",
         },
         grana: {
-          DEFAULT: "#A50044",
-          light: "#C2005A",
-          dark: "#6E002D",
+          DEFAULT: "#9C1C3A", // Grana · Pantone 201 C
+          light: "#B8324F",
+          dark: "#701429",
         },
         dorado: {
-          DEFAULT: "#EDBB00",
-          light: "#F5D460",
-          dark: "#B38F00",
+          DEFAULT: "#F0B429", // Oro Habana · Pantone 1235 C
+          light: "#F5C55C",
+          dark: "#B8860B",
         },
         tinta: {
-          DEFAULT: "#0B1220",
-          light: "#141C2E",
+          DEFAULT: "#142C54", // Marino Institucional · Pantone 289 C
+          light: "#1D3A6B",
         },
+        hueso: "#FAF6EE", // Blanco Hueso · Pantone 11-0107 TCX
       },
       fontFamily: {
-        display: ["var(--font-display)", "sans-serif"],
+        display: ["var(--font-display)", "serif"],
         body: ["var(--font-body)", "sans-serif"],
+        eyebrow: ["var(--font-eyebrow)", "sans-serif"],
       },
       backgroundImage: {
         "blaugrana-gradient":
-          "linear-gradient(135deg, #A50044 0%, #7A0038 25%, #002B57 55%, #004D98 100%)",
-        "gold-gradient": "linear-gradient(135deg, #F5D460 0%, #EDBB00 50%, #B38F00 100%)",
+          "linear-gradient(135deg, #9C1C3A 0%, #142C54 55%, #1D4D91 100%)",
+        "gold-gradient": "linear-gradient(135deg, #F5C55C 0%, #F0B429 50%, #B8860B 100%)",
       },
       maxWidth: {
         content: "1280px",

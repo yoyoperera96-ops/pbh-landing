@@ -5,7 +5,7 @@ import { siteConfig } from "@/lib/data";
 
 export function QuienesSomos() {
   return (
-    <section id="quienes-somos" className="bg-white py-24">
+    <section id="quienes-somos" className="bg-hueso py-24">
       <Container className="grid items-center gap-14 lg:grid-cols-2">
         <div>
           <SectionHeading
@@ -41,7 +41,7 @@ export function QuienesSomos() {
               { label: "Aniversario", value: "30 años" },
             ].map((item) => (
               <div key={item.label} className="rounded-2xl border border-tinta/10 p-4 text-center">
-                <p className="font-display text-2xl font-bold text-grana">{item.value}</p>
+                <p className="font-eyebrow text-2xl font-bold text-grana">{item.value}</p>
                 <p className="text-xs uppercase tracking-wide text-tinta/60">{item.label}</p>
               </div>
             ))}

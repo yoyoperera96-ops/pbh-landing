@@ -33,10 +33,10 @@ export function Header() {
       <Container className="flex h-16 items-center justify-between md:h-20">
         <a href="#top" className="flex items-center gap-3">
           <ShieldPlaceholder className="h-9 w-8 md:h-10 md:w-9" />
-          <span className="font-display text-lg font-bold uppercase leading-none text-white md:text-xl">
+          <span className="font-display text-lg font-semibold leading-none text-white md:text-xl">
             Peña Barcelonista
-            <span className="block text-xs font-medium tracking-widest text-dorado">
-              de La Habana
+            <span className="block font-eyebrow text-xs font-medium tracking-widest text-dorado">
+              DE LA HABANA
             </span>
           </span>
         </a>

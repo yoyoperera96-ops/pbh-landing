@@ -24,13 +24,17 @@ export function Hero() {
             <AnniversaryBadge className="h-16 w-16 md:h-20 md:w-20" />
           </div>
 
-          <span className="mb-4 inline-block rounded-full border border-dorado/50 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-dorado">
+          <span className="mb-4 inline-block rounded-full border border-dorado/50 bg-white/5 px-4 py-1 font-eyebrow text-xs font-semibold uppercase tracking-widest text-dorado">
             {siteConfig.foundedYear} — {siteConfig.anniversaryYear} · {siteConfig.anniversaryLabel}
           </span>
 
-          <h1 className="font-display text-4xl font-extrabold uppercase leading-[1.05] text-white text-balance sm:text-5xl md:text-6xl">
+          <h1 className="font-display text-4xl font-semibold leading-[1.1] text-white text-balance sm:text-5xl md:text-6xl">
             {siteConfig.tagline}
           </h1>
+
+          <p className="mt-3 font-display text-lg italic text-dorado">
+            {siteConfig.brandConcept}
+          </p>
 
           <p className="mx-auto mt-6 max-w-xl text-lg text-white/85 lg:mx-0">
             Casi 30 años reuniendo a la afición del FC Barcelona en Cuba. Vive cada
@@ -55,17 +59,17 @@ export function Hero() {
           <dl className="mx-auto mt-12 grid max-w-xl grid-cols-3 gap-4 border-t border-white/15 pt-8 text-center lg:mx-0 lg:text-left">
             <div>
               <dt className="sr-only">Años de historia</dt>
-              <dd className="font-display text-3xl font-bold text-dorado">30</dd>
+              <dd className="font-eyebrow text-3xl font-bold text-dorado">30</dd>
               <p className="text-xs uppercase tracking-wide text-white/70">Años de historia</p>
             </div>
             <div>
               <dt className="sr-only">Socios activos</dt>
-              <dd className="font-display text-3xl font-bold text-dorado">+300</dd>
+              <dd className="font-eyebrow text-3xl font-bold text-dorado">+300</dd>
               <p className="text-xs uppercase tracking-wide text-white/70">Socios activos</p>
             </div>
             <div>
               <dt className="sr-only">Encuentros al año</dt>
-              <dd className="font-display text-3xl font-bold text-dorado">+40</dd>
+              <dd className="font-eyebrow text-3xl font-bold text-dorado">+40</dd>
               <p className="text-xs uppercase tracking-wide text-white/70">Encuentros al año</p>
             </div>
           </dl>
