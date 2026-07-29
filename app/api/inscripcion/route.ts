@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { sql } from "@/lib/db";
 
 type InscripcionPayload = {
   nombre?: string;
@@ -8,6 +9,8 @@ type InscripcionPayload = {
   mensaje?: string;
   terminos?: string;
 };
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(req: NextRequest) {
   const data = (await req.json()) as InscripcionPayload;
@@ -19,16 +22,20 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // TODO(integración): conectar con servicio de email (p.ej. Resend/SendGrid)
-  // y/o guardar en base de datos cuando exista el portal de socios.
-  // Por ahora se registra en el log del servidor para no perder solicitudes.
-  console.log("Nueva solicitud de inscripción PBH:", {
-    nombre: data.nombre,
-    correo: data.correo,
-    telefono: data.telefono,
-    municipio: data.municipio,
-    mensaje: data.mensaje,
-  });
+  if (!EMAIL_RE.test(data.correo)) {
+    return NextResponse.json(
+      { ok: false, error: "El correo electrónico no es válido." },
+      { status: 400 }
+    );
+  }
+
+  await sql`
+    INSERT INTO inscripciones (nombre, correo, telefono, municipio, mensaje)
+    VALUES (${data.nombre}, ${data.correo}, ${data.telefono}, ${data.municipio ?? null}, ${data.mensaje ?? null})
+  `;
+
+  // TODO(integración): conectar con un servicio de email transaccional
+  // (p.ej. Resend) para notificar a la Junta Directiva de cada nueva solicitud.
 
   return NextResponse.json({ ok: true });
 }

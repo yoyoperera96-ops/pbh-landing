@@ -40,11 +40,15 @@ app/
   page.tsx           Ensambla todas las secciones de la landing
   sitemap.ts         Sitemap dinámico
   robots.ts          robots.txt dinámico
-  api/inscripcion/   Endpoint del formulario de inscripción
+  api/inscripcion/   Endpoint del formulario de inscripción (guarda en Postgres)
+  admin/page.tsx     Panel protegido con la lista de inscripciones
 components/          Un componente por sección (Header, Hero, Timeline, etc.)
 components/ui/       Componentes reutilizables (Container, SectionHeading)
 lib/data.ts          Todo el contenido editable (historia, beneficios, testimonios,
                      eventos, FAQ, redes sociales) en un único archivo
+lib/db.ts            Cliente de la base de datos Postgres (Neon)
+scripts/setup-db.mjs Crea la tabla "inscripciones" (npm run db:setup)
+proxy.ts             Protege /admin con usuario/contraseña
 public/images/       Carpeta para assets reales (ver README interno)
 ```
 
@@ -79,15 +83,49 @@ eventos, preguntas frecuentes, redes sociales, correo/WhatsApp de contacto) vive
 un solo archivo: **`lib/data.ts`**. Es contenido de ejemplo y debe ser validado por
 la Junta Directiva de la PBH antes de publicar.
 
-## 5. Formulario de inscripción
+## 5. Formulario de inscripción y base de datos
 
 El formulario (`components/FormularioInscripcion.tsx`) envía los datos a
-`app/api/inscripcion/route.ts`, que por ahora solo valida y registra la solicitud
-en el log del servidor. Antes de producción, conecta ese endpoint a:
+`app/api/inscripcion/route.ts`, que valida los campos y los guarda en una tabla
+`inscripciones` de **Postgres (Neon, vía Vercel Storage)**.
 
-- Un servicio de email transaccional (p.ej. Resend, SendGrid) para notificar a la
-  Junta Directiva, y/o
-- Una base de datos (p.ej. Postgres/Supabase) para llevar el registro de socios.
+### Variables de entorno necesarias
+
+| Variable | De dónde sale | Uso |
+| --- | --- | --- |
+| `POSTGRES_URL` | Vercel → proyecto → Storage → tu base de datos → pestaña ".env.local" | Conexión a la base de datos (`lib/db.ts`) |
+| `ADMIN_USER` | La eliges tú | Usuario para entrar a `/admin` |
+| `ADMIN_PASSWORD` | La eliges tú | Contraseña para entrar a `/admin` |
+
+**En producción (Vercel):** `POSTGRES_URL` se agrega sola al conectar la base de
+datos al proyecto desde la pestaña Storage. `ADMIN_USER` y `ADMIN_PASSWORD` hay
+que añadirlas a mano en Project Settings → Environment Variables.
+
+**En local:** crea un archivo `.env.local` (no se sube a git) en la raíz del
+proyecto:
+
+```
+POSTGRES_URL="postgres://...que copiaste de Vercel..."
+ADMIN_USER=junta
+ADMIN_PASSWORD=elige-una-contraseña
+```
+
+Luego, para crear la tabla una sola vez:
+
+```bash
+npm run db:setup
+```
+
+### Panel de administración
+
+`/admin` (protegido con usuario/contraseña vía `proxy.ts`) muestra la lista de
+inscripciones ordenadas por fecha, con nombre, correo, teléfono, municipio y
+mensaje. Pensado para que la Junta Directiva revise las solicitudes sin entrar
+al dashboard de Vercel.
+
+Pendiente de integración futura: un servicio de email transaccional (p.ej.
+Resend) para notificar a la Junta Directiva por correo cuando llega una
+solicitud nueva, además de guardarla en la base de datos.
 
 ## 6. SEO y rendimiento
 
