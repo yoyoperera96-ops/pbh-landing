@@ -5,12 +5,13 @@ import { Escudo } from "./Escudo";
 import { Container } from "./ui/Container";
 
 const links = [
-  { href: "#quienes-somos", label: "Quiénes somos" },
-  { href: "#historia", label: "Historia" },
-  { href: "#beneficios", label: "Beneficios" },
-  { href: "#galeria", label: "Galería" },
-  { href: "#eventos", label: "Eventos" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#quienes-somos", label: "Quiénes somos" },
+  { href: "/#historia", label: "Historia" },
+  { href: "/#beneficios", label: "Beneficios" },
+  { href: "/#galeria", label: "Galería" },
+  { href: "/#eventos", label: "Eventos" },
+  { href: "/actualidad", label: "Actualidad" },
+  { href: "/#faq", label: "FAQ" },
 ];
 
 export function Header() {
@@ -31,7 +32,7 @@ export function Header() {
       }`}
     >
       <Container className="flex h-16 items-center justify-between md:h-20">
-        <a href="#top" className="flex items-center gap-3">
+        <a href="/#top" className="flex items-center gap-3">
           <Escudo className="h-9 w-9 md:h-10 md:w-10" />
           <span className="font-display text-lg font-semibold leading-none text-white md:text-xl">
             Peña Barcelonista
@@ -55,7 +56,7 @@ export function Header() {
 
         <div className="hidden lg:block">
           <a
-            href="#inscripcion"
+            href="/#inscripcion"
             className="rounded-full bg-grana px-5 py-2.5 text-sm font-semibold text-white shadow-card transition hover:bg-grana-light"
           >
             Únete a la Peña
@@ -94,7 +95,7 @@ export function Header() {
               </a>
             ))}
             <a
-              href="#inscripcion"
+              href="/#inscripcion"
               onClick={() => setOpen(false)}
               className="mt-2 rounded-full bg-grana px-5 py-3 text-center text-sm font-semibold text-white"
             >

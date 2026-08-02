@@ -171,7 +171,29 @@ Si `GMAIL_USER`/`GMAIL_APP_PASSWORD` no están configuradas, el estado se
 actualiza igual — el envío del correo simplemente falla y queda registrado en
 los logs del servidor, sin bloquear el resto del panel.
 
-## 6. SEO y rendimiento
+## 6. Actualidad del Club (`/actualidad`)
+
+Nueva pestaña con dos cosas:
+
+- **Calendario del FC Barcelona**: los partidos del primer equipo en los
+  próximos 7 días, calculados desde el momento en que cada visitante entra a
+  la página. Los datos vienen de `lib/fcbFixtures.ts`, que lee en el servidor
+  el bloque de datos estructurados (JSON-LD `SportsEvent`, schema.org) que
+  `fcbarcelona.com` publica en su propia página oficial de calendario — no es
+  contenido inventado ni un scraping del maquetado visual, es el mismo feed
+  que el club expone para que lo lean buscadores y apps externas. Se
+  refresca solo (revalidación cada hora); si no hay partidos en la ventana de
+  7 días, o si fcbarcelona.com no responde, se muestra un aviso con enlace al
+  calendario oficial en vez de romper la página.
+- **Canal de YouTube de la Peña**: enlace destacado a
+  `youtube.com/@habanacule1899`, también agregado a los íconos de redes del
+  footer en todas las páginas.
+
+Si en el futuro cambia la URL o estructura de la página oficial del Barça,
+ajusta el selector en `lib/fcbFixtures.ts` (`FCB_SCHEDULE_URL` y la función
+`extraerEventos`).
+
+## 7. SEO y rendimiento
 
 - Metadata, Open Graph, Twitter Card y datos estructurados (JSON-LD `SportsOrganization`)
   configurados en `app/layout.tsx`.
@@ -181,7 +203,7 @@ los logs del servidor, sin bloquear el resto del panel.
   `https://penabarcelonista-habana-cuba.vercel.app`. Si más adelante se conecta
   un dominio propio, actualízalo en los tres archivos.
 
-## 7. Arquitectura pensada para crecer
+## 8. Arquitectura pensada para crecer
 
 La landing vive toda en `app/page.tsx` como una única ruta. Para las futuras
 funciones mencionadas (portal de socios, noticias, eventos, pagos, tienda),

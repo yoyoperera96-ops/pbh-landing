@@ -28,6 +28,7 @@ export const siteConfig = {
   social: {
     facebook: "https://www.facebook.com/PenyaBarcelonistaLaHabanaCuba/",
     instagram: "https://www.instagram.com/penyabhavana/",
+    youtube: "https://youtube.com/@habanacule1899",
     website: "https://penyabarcelonistahavana.wordpress.com/",
   },
 };
