@@ -10,10 +10,16 @@ async function procesar(formData: FormData, estado: EstadoInscripcion) {
 
   const rows = (await sql`
     UPDATE inscripciones
-    SET estado = ${estado}, procesado_en = now()
+    SET
+      estado = ${estado},
+      procesado_en = now(),
+      numero_socio = CASE
+        WHEN ${estado} = 'aceptada' AND numero_socio IS NULL THEN nextval('socio_numero_seq')
+        ELSE numero_socio
+      END
     WHERE id = ${id}
-    RETURNING nombre, correo
-  `) as { nombre: string; correo: string }[];
+    RETURNING nombre, correo, numero_socio
+  `) as { nombre: string; correo: string; numero_socio: number | null }[];
 
   const inscripcion = rows[0];
 
@@ -23,6 +29,7 @@ async function procesar(formData: FormData, estado: EstadoInscripcion) {
         nombre: inscripcion.nombre,
         correo: inscripcion.correo,
         estado,
+        numeroSocio: inscripcion.numero_socio,
       });
     } catch (err) {
       // No bloquea el cambio de estado si el email falla (p.ej. falta configurar

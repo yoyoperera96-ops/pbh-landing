@@ -124,6 +124,7 @@ Luego, para crear/actualizar la tabla:
 ```bash
 npm run db:setup
 node --env-file=.env.local scripts/migrate-002-estado.mjs
+node --env-file=.env.local scripts/migrate-003-numero-socio.mjs
 ```
 
 ### Cómo generar la Contraseña de aplicación de Gmail
@@ -148,8 +149,11 @@ y dos botones, **Aceptar** y **Rechazar** (`app/admin/actions.ts`). Al usarlos:
 
 1. Se actualiza el `estado` de la solicitud en la base de datos (`pendiente` →
    `aceptada` / `rechazada`) junto con la fecha de proceso.
-2. Se envía automáticamente un correo a la persona, desde `GMAIL_USER`, con la
-   plantilla correspondiente (`lib/email.ts`).
+2. Si se acepta, recibe un **número de socio consecutivo** (secuencia
+   `socio_numero_seq`, arranca en 1), visible en el panel como "Socio #N".
+3. Se envía automáticamente un correo a la persona, desde `GMAIL_USER`, con la
+   plantilla correspondiente (`lib/email.ts`) — la de aceptación incluye el
+   número de socio.
 
 Si `GMAIL_USER`/`GMAIL_APP_PASSWORD` no están configuradas, el estado se
 actualiza igual — el envío del correo simplemente falla y queda registrado en

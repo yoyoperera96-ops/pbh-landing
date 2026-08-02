@@ -12,6 +12,7 @@ export type Inscripcion = {
   carnet_identidad: string | null;
   direccion: string | null;
   estado: EstadoInscripcion;
+  numero_socio: number | null;
   procesado_en: string | null;
   creado_en: string;
 };

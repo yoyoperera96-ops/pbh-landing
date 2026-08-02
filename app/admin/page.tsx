@@ -17,7 +17,7 @@ const badgeStyles: Record<Inscripcion["estado"], string> = {
 export default async function AdminPage() {
   const inscripciones = (await sql`
     SELECT id, nombre, carnet_identidad, correo, telefono, direccion, municipio,
-           mensaje, estado, procesado_en, creado_en
+           mensaje, estado, numero_socio, procesado_en, creado_en
     FROM inscripciones
     ORDER BY creado_en DESC
   `) as Inscripcion[];
@@ -43,11 +43,18 @@ export default async function AdminPage() {
                     {formatter.format(new Date(i.creado_en))}
                   </p>
                 </div>
-                <span
-                  className={`rounded-full px-3 py-1 text-xs font-semibold uppercase ${badgeStyles[i.estado]}`}
-                >
-                  {i.estado}
-                </span>
+                <div className="flex items-center gap-2">
+                  {i.numero_socio && (
+                    <span className="rounded-full bg-tinta px-3 py-1 font-eyebrow text-xs font-semibold text-dorado">
+                      Socio #{i.numero_socio}
+                    </span>
+                  )}
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-semibold uppercase ${badgeStyles[i.estado]}`}
+                  >
+                    {i.estado}
+                  </span>
+                </div>
               </div>
 
               <dl className="mt-4 grid grid-cols-1 gap-x-6 gap-y-2 text-sm sm:grid-cols-2">

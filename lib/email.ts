@@ -43,12 +43,22 @@ function layout(title: string, bodyHtml: string) {
   </div>`;
 }
 
-function plantillaAceptada(nombre: string) {
+function plantillaAceptada(nombre: string, numeroSocio: number | null) {
+  const numeroHtml = numeroSocio
+    ? `
+    <div style="margin:20px 0;padding:16px;border-radius:12px;background:#FAF6EE;text-align:center;">
+      <p style="margin:0;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#142C54;">Tu número de socio</p>
+      <p style="margin:4px 0 0;font-size:28px;font-weight:bold;color:#9C1C3A;">#${numeroSocio}</p>
+    </div>
+    `
+    : "";
+
   return layout(
     `¡Bienvenido/a, ${nombre}!`,
     `
     <p>Con mucha alegría te confirmamos que tu solicitud de membresía a la
     <strong>Peña Barcelonista de La Habana</strong> ha sido <strong>aceptada</strong>.</p>
+    ${numeroHtml}
     <p>Ya eres parte de esta casa culé que desde 1996 reúne a la afición del FC
     Barcelona en Cuba. En los próximos días la Junta Directiva se pondrá en
     contacto contigo para coordinar la entrega de tu carné oficial de socio y
@@ -76,10 +86,12 @@ export async function enviarDecisionInscripcion({
   nombre,
   correo,
   estado,
+  numeroSocio = null,
 }: {
   nombre: string;
   correo: string;
   estado: "aceptada" | "rechazada";
+  numeroSocio?: number | null;
 }) {
   const transporter = getTransporter();
 
@@ -89,7 +101,7 @@ export async function enviarDecisionInscripcion({
       : "Sobre tu solicitud a la Peña Barcelonista de La Habana";
 
   const html =
-    estado === "aceptada" ? plantillaAceptada(nombre) : plantillaRechazada(nombre);
+    estado === "aceptada" ? plantillaAceptada(nombre, numeroSocio) : plantillaRechazada(nombre);
 
   await transporter.sendMail({
     from: `"Peña Barcelonista de La Habana" <${process.env.GMAIL_USER}>`,
