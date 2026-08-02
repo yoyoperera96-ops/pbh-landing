@@ -12,6 +12,7 @@ const links = [
   { href: "/#eventos", label: "Eventos" },
   { href: "/actualidad", label: "Actualidad" },
   { href: "/#faq", label: "FAQ" },
+  { href: "/quiniela", label: "Quiniela" },
 ];
 
 export function Header() {
@@ -54,7 +55,13 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden items-center gap-4 lg:flex">
+          <a
+            href="/login"
+            className="text-sm font-medium text-white/80 transition hover:text-dorado"
+          >
+            Iniciar sesión
+          </a>
           <a
             href="/#inscripcion"
             className="rounded-full bg-grana px-5 py-2.5 text-sm font-semibold text-white shadow-card transition hover:bg-grana-light"
@@ -94,6 +101,13 @@ export function Header() {
                 {link.label}
               </a>
             ))}
+            <a
+              href="/login"
+              onClick={() => setOpen(false)}
+              className="rounded-lg px-3 py-3 text-sm font-medium text-white/85 hover:bg-white/5 hover:text-dorado"
+            >
+              Iniciar sesión
+            </a>
             <a
               href="/#inscripcion"
               onClick={() => setOpen(false)}

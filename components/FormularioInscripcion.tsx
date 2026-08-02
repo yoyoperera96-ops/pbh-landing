@@ -18,6 +18,12 @@ export function FormularioInscripcion() {
     const form = e.currentTarget;
     const data = Object.fromEntries(new FormData(form).entries());
 
+    if (data.password !== data.confirmarPassword) {
+      setStatus("error");
+      setErrorMsg("Las contraseñas no coinciden.");
+      return;
+    }
+
     try {
       const res = await fetch("/api/inscripcion", {
         method: "POST",
@@ -25,13 +31,15 @@ export function FormularioInscripcion() {
         body: JSON.stringify(data),
       });
 
-      if (!res.ok) throw new Error("No se pudo enviar la inscripción.");
+      const body = await res.json().catch(() => null);
+
+      if (!res.ok) throw new Error(body?.error || "No se pudo enviar la inscripción.");
 
       setStatus("success");
       form.reset();
     } catch (err) {
       setStatus("error");
-      setErrorMsg("Ocurrió un problema al enviar tu inscripción. Intenta de nuevo.");
+      setErrorMsg(err instanceof Error ? err.message : "Ocurrió un problema. Intenta de nuevo.");
     }
   }
 
@@ -43,7 +51,7 @@ export function FormularioInscripcion() {
             align="left"
             eyebrow="Únete a la Peña"
             title="Solicita tu membresía"
-            description="Completa el formulario y un miembro de la Junta Directiva se pondrá en contacto contigo para formalizar tu inscripción."
+            description="Completa el formulario para crear tu cuenta de socio y enviar tu solicitud. Un miembro de la Junta Directiva se pondrá en contacto contigo para formalizarla."
           />
           <ul className="mt-8 space-y-4 text-sm text-tinta/70">
             {[
@@ -71,8 +79,12 @@ export function FormularioInscripcion() {
                 ¡Solicitud enviada!
               </h3>
               <p className="max-w-sm text-sm text-tinta/70">
-                Gracias por querer formar parte de la PBH. Te contactaremos pronto
-                para completar tu inscripción.
+                Gracias por querer formar parte de la PBH. Ya puedes{" "}
+                <a href="/login" className="font-semibold text-grana hover:underline">
+                  iniciar sesión
+                </a>{" "}
+                con tu usuario — te contactaremos pronto para completar tu
+                inscripción.
               </p>
             </div>
           ) : (
@@ -104,6 +116,23 @@ export function FormularioInscripcion() {
                   maxLength={11}
                   className="w-full rounded-xl border border-tinta/15 px-4 py-3 text-sm outline-none transition focus:border-grana"
                   placeholder="11 dígitos"
+                />
+              </div>
+
+              <div className="sm:col-span-1">
+                <label htmlFor="usuario" className="mb-1.5 block text-sm font-medium text-tinta">
+                  Nombre de usuario *
+                </label>
+                <input
+                  id="usuario"
+                  name="usuario"
+                  required
+                  minLength={3}
+                  maxLength={20}
+                  pattern="[a-zA-Z0-9_]+"
+                  title="Solo letras, números y guion bajo, sin espacios"
+                  className="w-full rounded-xl border border-tinta/15 px-4 py-3 text-sm outline-none transition focus:border-grana"
+                  placeholder="Para iniciar sesión y la quiniela"
                 />
               </div>
 
@@ -157,6 +186,36 @@ export function FormularioInscripcion() {
                   name="municipio"
                   className="w-full rounded-xl border border-tinta/15 px-4 py-3 text-sm outline-none transition focus:border-grana"
                   placeholder="La Habana"
+                />
+              </div>
+
+              <div className="sm:col-span-1">
+                <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-tinta">
+                  Contraseña *
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  minLength={8}
+                  className="w-full rounded-xl border border-tinta/15 px-4 py-3 text-sm outline-none transition focus:border-grana"
+                  placeholder="Mínimo 8 caracteres"
+                />
+              </div>
+
+              <div className="sm:col-span-1">
+                <label htmlFor="confirmarPassword" className="mb-1.5 block text-sm font-medium text-tinta">
+                  Confirmar contraseña *
+                </label>
+                <input
+                  id="confirmarPassword"
+                  name="confirmarPassword"
+                  type="password"
+                  required
+                  minLength={8}
+                  className="w-full rounded-xl border border-tinta/15 px-4 py-3 text-sm outline-none transition focus:border-grana"
+                  placeholder="Repite la contraseña"
                 />
               </div>
 

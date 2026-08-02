@@ -44,15 +44,20 @@ app/
   admin/page.tsx     Panel protegido: lista/mosaico, buscador, filtro por estado
   admin/actions.ts   Server actions: aceptar/rechazar solicitud + envío de email
   api/admin/export/  Exporta a CSV los resultados filtrados
+  login/page.tsx     Formulario de inicio de sesión de socios
+  login/actions.ts   Server actions: iniciarSesion / cerrarSesion
+  quiniela/page.tsx  Área de socios (acceso solo con sesión + estado aceptada)
 components/          Un componente por sección (Header, Hero, Timeline, etc.)
 components/ui/       Componentes reutilizables (Container, SectionHeading)
 lib/data.ts          Todo el contenido editable (historia, beneficios, testimonios,
                      eventos, FAQ, redes sociales) en un único archivo
 lib/db.ts            Cliente de Postgres (Neon) + getInscripciones (búsqueda/filtro)
 lib/email.ts         Envío de correos de aceptación/rechazo (Gmail SMTP)
+lib/auth.ts          Hash de contraseñas y sesión de socios (cookie firmada)
 scripts/setup-db.mjs                 Crea la tabla "inscripciones" (npm run db:setup)
 scripts/migrate-002-estado.mjs       Agrega carné, dirección y estado a la tabla
 scripts/migrate-003-numero-socio.mjs Agrega la secuencia de número de socio
+scripts/migrate-004-cuentas.mjs      Agrega usuario/password_hash a inscripciones
 proxy.ts             Protege /admin y /api/admin con usuario/contraseña
 public/images/       Carpeta para assets reales (ver README interno)
 ```
@@ -91,10 +96,17 @@ la Junta Directiva de la PBH antes de publicar.
 ## 5. Formulario de inscripción, base de datos y panel admin
 
 El formulario (`components/FormularioInscripcion.tsx`) pide nombre, **carné de
-identidad**, correo, teléfono, **dirección**, municipio y mensaje; envía los
-datos a `app/api/inscripcion/route.ts`, que los valida y los guarda en la tabla
-`inscripciones` de **Postgres (Neon, vía Vercel Storage)** con estado inicial
-`pendiente`.
+identidad**, **usuario y contraseña** (crea la cuenta de socio), correo,
+teléfono, **dirección**, municipio y mensaje; envía los datos a
+`app/api/inscripcion/route.ts`, que los valida, hashea la contraseña
+(bcryptjs) y los guarda en la tabla `inscripciones` de **Postgres (Neon, vía
+Vercel Storage)** con estado inicial `pendiente`.
+
+Esa misma cuenta sirve para iniciar sesión en `/login` y acceder a áreas de
+socios como `/quiniela` (`lib/auth.ts`: cookie de sesión firmada con
+`SESSION_SECRET`, ver más abajo). El acceso se resuelve por página (cada
+página protegida llama a `getSession()`), no hay nada bloqueado a nivel de
+navegación.
 
 ### Variables de entorno necesarias
 
@@ -105,9 +117,10 @@ datos a `app/api/inscripcion/route.ts`, que los valida y los guarda en la tabla
 | `ADMIN_PASSWORD` | La eliges tú | Contraseña para entrar a `/admin` |
 | `GMAIL_USER` | La cuenta oficial de la PBH | Remitente de los correos de aceptación/rechazo |
 | `GMAIL_APP_PASSWORD` | Ver instrucciones abajo | Autentica el envío por Gmail SMTP |
+| `SESSION_SECRET` | Cadena aleatoria larga (te doy una generada) | Firma las cookies de sesión de socios (`lib/auth.ts`) |
 
 **En producción (Vercel):** `POSTGRES_URL` se agrega sola al conectar la base de
-datos al proyecto desde la pestaña Storage. Las otras cuatro hay que añadirlas
+datos al proyecto desde la pestaña Storage. Las demás hay que añadirlas
 a mano en Project Settings → Environment Variables (y darle Redeploy después).
 
 **En local:** crea un archivo `.env.local` (no se sube a git) en la raíz del
@@ -119,6 +132,7 @@ ADMIN_USER=junta
 ADMIN_PASSWORD=elige-una-contraseña
 GMAIL_USER=penyabhavana@gmail.com
 GMAIL_APP_PASSWORD=contraseña-de-aplicación-de-16-caracteres
+SESSION_SECRET=una-cadena-aleatoria-larga-y-secreta
 ```
 
 Luego, para crear/actualizar la tabla:
@@ -127,6 +141,7 @@ Luego, para crear/actualizar la tabla:
 npm run db:setup
 node --env-file=.env.local scripts/migrate-002-estado.mjs
 node --env-file=.env.local scripts/migrate-003-numero-socio.mjs
+node --env-file=.env.local scripts/migrate-004-cuentas.mjs
 ```
 
 ### Cómo generar la Contraseña de aplicación de Gmail
