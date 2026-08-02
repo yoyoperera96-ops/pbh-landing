@@ -43,10 +43,12 @@ app/
   api/inscripcion/   Endpoint del formulario de inscripción (guarda en Postgres)
   admin/page.tsx     Panel protegido: lista/mosaico, buscador, filtro por estado
   admin/actions.ts   Server actions: aceptar/rechazar solicitud + envío de email
+  admin/quiniela/    Sincroniza el calendario oficial y activa/desactiva partidos
   api/admin/export/  Exporta a CSV los resultados filtrados
   login/page.tsx     Formulario de inicio de sesión de socios
   login/actions.ts   Server actions: iniciarSesion / cerrarSesion
-  quiniela/page.tsx  Área de socios (acceso solo con sesión + estado aceptada)
+  quiniela/page.tsx  Predicciones del socio (acceso solo con sesión + estado aceptada)
+  quiniela/actions.ts Server action: guardarPrediccion
 components/          Un componente por sección (Header, Hero, Timeline, etc.)
 components/ui/       Componentes reutilizables (Container, SectionHeading)
 lib/data.ts          Todo el contenido editable (historia, beneficios, testimonios,
@@ -54,9 +56,11 @@ lib/data.ts          Todo el contenido editable (historia, beneficios, testimoni
 lib/db.ts            Cliente de Postgres (Neon) + getInscripciones (búsqueda/filtro)
 lib/email.ts         Envío de correos de aceptación/rechazo (Gmail SMTP)
 lib/auth.ts          Hash de contraseñas y sesión de socios (cookie firmada)
+lib/fcbFixtures.ts   Calendario/resultados oficiales del FC Barcelona (fcbarcelona.com)
 scripts/setup-db.mjs                 Crea la tabla "inscripciones" (npm run db:setup)
 scripts/migrate-002-estado.mjs       Agrega carné, dirección y estado a la tabla
 scripts/migrate-003-numero-socio.mjs Agrega la secuencia de número de socio
+scripts/migrate-005-quiniela.mjs     Crea partidos_quiniela y predicciones
 scripts/migrate-004-cuentas.mjs      Agrega usuario/password_hash a inscripciones
 proxy.ts             Protege /admin y /api/admin con usuario/contraseña
 public/images/       Carpeta para assets reales (ver README interno)
@@ -208,7 +212,42 @@ Si en el futuro cambia la URL o estructura de la página oficial del Barça,
 ajusta el selector en `lib/fcbFixtures.ts` (`FCB_SCHEDULE_URL` y la función
 `extraerEventos`).
 
-## 7. SEO y rendimiento
+## 7. Quiniela (`/quiniela`, en construcción por fases)
+
+Exclusiva para socios **aceptados** (usa la cuenta creada en la inscripción,
+ver sección 5). Predice el resultado de cada partido oficial de la
+temporada 26-27 (Liga, Champions, Copa del Rey, Supercopa — se excluyen
+amistosos) antes de que empiece: **3 puntos** por marcador exacto, **1 punto**
+por acertar el signo (1 · X · 2).
+
+Se construye en fases, cada una publicada y probada por separado:
+
+- ✅ **Fase A** — cuentas de socio, login/logout (sección 5).
+- ✅ **Fase B** — calendario de temporada y formulario de predicciones.
+  - `/admin/quiniela`: botón **Sincronizar calendario** trae los partidos
+    oficiales desde fcbarcelona.com (`lib/fcbFixtures.ts` →
+    `getCalendarioTemporadaOficial()`) y los guarda en `partidos_quiniela`;
+    cada partido se puede activar/desactivar para la quiniela.
+  - `/quiniela`: cada socio aceptado predice marcador local/visitante por
+    partido (`app/quiniela/actions.ts` → `guardarPrediccion`), editable
+    mientras el partido siga `programado` y no haya empezado.
+- ⏳ **Fase C** (próxima) — captura del resultado final y cálculo de puntos.
+  El marcador **no** viene en datos estructurados como sí las fechas; solo el
+  último partido jugado trae marcador en HTML plano
+  (`lib/fcbFixtures.ts` → `getUltimoResultado()`, ya implementada y probada
+  contra la web real). Por eso el resultado se revisa de a un partido a la
+  vez; para partidos que se completen entre una revisión y otra, o si
+  fcbarcelona.com cambia de formato, `/admin/quiniela` tendrá edición manual
+  del marcador como respaldo — imprescindible, no opcional, al haber puntos
+  reales en juego.
+- ⏳ **Fase D** (próxima) — tabla de posiciones (`components/ClasificacionQuiniela.tsx`)
+  por nombre de usuario, semana actual por defecto con toggle a temporada
+  completa.
+
+Esquema: `scripts/migrate-005-quiniela.mjs` crea `partidos_quiniela` y
+`predicciones` (una predicción por socio y partido, `UNIQUE (inscripcion_id, partido_id)`).
+
+## 8. SEO y rendimiento
 
 - Metadata, Open Graph, Twitter Card y datos estructurados (JSON-LD `SportsOrganization`)
   configurados en `app/layout.tsx`.
@@ -218,7 +257,7 @@ ajusta el selector en `lib/fcbFixtures.ts` (`FCB_SCHEDULE_URL` y la función
   `https://penabarcelonista-habana-cuba.vercel.app`. Si más adelante se conecta
   un dominio propio, actualízalo en los tres archivos.
 
-## 8. Arquitectura pensada para crecer
+## 9. Arquitectura pensada para crecer
 
 La landing vive toda en `app/page.tsx` como una única ruta. Para las futuras
 funciones mencionadas (portal de socios, noticias, eventos, pagos, tienda),
