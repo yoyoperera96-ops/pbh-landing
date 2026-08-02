@@ -41,17 +41,19 @@ app/
   sitemap.ts         Sitemap dinámico
   robots.ts          robots.txt dinámico
   api/inscripcion/   Endpoint del formulario de inscripción (guarda en Postgres)
-  admin/page.tsx     Panel protegido con la lista de inscripciones
+  admin/page.tsx     Panel protegido: lista/mosaico, buscador, filtro por estado
   admin/actions.ts   Server actions: aceptar/rechazar solicitud + envío de email
+  api/admin/export/  Exporta a CSV los resultados filtrados
 components/          Un componente por sección (Header, Hero, Timeline, etc.)
 components/ui/       Componentes reutilizables (Container, SectionHeading)
 lib/data.ts          Todo el contenido editable (historia, beneficios, testimonios,
                      eventos, FAQ, redes sociales) en un único archivo
-lib/db.ts            Cliente de la base de datos Postgres (Neon)
+lib/db.ts            Cliente de Postgres (Neon) + getInscripciones (búsqueda/filtro)
 lib/email.ts         Envío de correos de aceptación/rechazo (Gmail SMTP)
-scripts/setup-db.mjs           Crea la tabla "inscripciones" (npm run db:setup)
-scripts/migrate-002-estado.mjs Agrega carné, dirección y estado a la tabla
-proxy.ts             Protege /admin con usuario/contraseña
+scripts/setup-db.mjs                 Crea la tabla "inscripciones" (npm run db:setup)
+scripts/migrate-002-estado.mjs       Agrega carné, dirección y estado a la tabla
+scripts/migrate-003-numero-socio.mjs Agrega la secuencia de número de socio
+proxy.ts             Protege /admin y /api/admin con usuario/contraseña
 public/images/       Carpeta para assets reales (ver README interno)
 ```
 
@@ -154,6 +156,16 @@ y dos botones, **Aceptar** y **Rechazar** (`app/admin/actions.ts`). Al usarlos:
 3. Se envía automáticamente un correo a la persona, desde `GMAIL_USER`, con la
    plantilla correspondiente (`lib/email.ts`) — la de aceptación incluye el
    número de socio.
+
+El panel además tiene:
+
+- **Buscador**: filtra por nombre, carné, correo, teléfono, municipio,
+  dirección o mensaje (`?q=`).
+- **Filtro por estado**: todas / pendientes / aceptadas / rechazadas (`?estado=`).
+- **Dos vistas**: Lista (detalle completo) y Mosaico (grid compacto) (`?view=`).
+- **Exportar CSV**: descarga los resultados actualmente filtrados
+  (`/api/admin/export`, protegido igual que `/admin`), listo para abrir en
+  Excel/Sheets — incluye número de socio, carné, contacto, estado y fechas.
 
 Si `GMAIL_USER`/`GMAIL_APP_PASSWORD` no están configuradas, el estado se
 actualiza igual — el envío del correo simplemente falla y queda registrado en
