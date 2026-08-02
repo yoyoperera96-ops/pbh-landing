@@ -42,12 +42,15 @@ app/
   robots.ts          robots.txt dinámico
   api/inscripcion/   Endpoint del formulario de inscripción (guarda en Postgres)
   admin/page.tsx     Panel protegido con la lista de inscripciones
+  admin/actions.ts   Server actions: aceptar/rechazar solicitud + envío de email
 components/          Un componente por sección (Header, Hero, Timeline, etc.)
 components/ui/       Componentes reutilizables (Container, SectionHeading)
 lib/data.ts          Todo el contenido editable (historia, beneficios, testimonios,
                      eventos, FAQ, redes sociales) en un único archivo
 lib/db.ts            Cliente de la base de datos Postgres (Neon)
-scripts/setup-db.mjs Crea la tabla "inscripciones" (npm run db:setup)
+lib/email.ts         Envío de correos de aceptación/rechazo (Gmail SMTP)
+scripts/setup-db.mjs           Crea la tabla "inscripciones" (npm run db:setup)
+scripts/migrate-002-estado.mjs Agrega carné, dirección y estado a la tabla
 proxy.ts             Protege /admin con usuario/contraseña
 public/images/       Carpeta para assets reales (ver README interno)
 ```
@@ -83,11 +86,13 @@ eventos, preguntas frecuentes, redes sociales, correo/WhatsApp de contacto) vive
 un solo archivo: **`lib/data.ts`**. Es contenido de ejemplo y debe ser validado por
 la Junta Directiva de la PBH antes de publicar.
 
-## 5. Formulario de inscripción y base de datos
+## 5. Formulario de inscripción, base de datos y panel admin
 
-El formulario (`components/FormularioInscripcion.tsx`) envía los datos a
-`app/api/inscripcion/route.ts`, que valida los campos y los guarda en una tabla
-`inscripciones` de **Postgres (Neon, vía Vercel Storage)**.
+El formulario (`components/FormularioInscripcion.tsx`) pide nombre, **carné de
+identidad**, correo, teléfono, **dirección**, municipio y mensaje; envía los
+datos a `app/api/inscripcion/route.ts`, que los valida y los guarda en la tabla
+`inscripciones` de **Postgres (Neon, vía Vercel Storage)** con estado inicial
+`pendiente`.
 
 ### Variables de entorno necesarias
 
@@ -96,10 +101,12 @@ El formulario (`components/FormularioInscripcion.tsx`) envía los datos a
 | `POSTGRES_URL` | Vercel → proyecto → Storage → tu base de datos → pestaña ".env.local" | Conexión a la base de datos (`lib/db.ts`) |
 | `ADMIN_USER` | La eliges tú | Usuario para entrar a `/admin` |
 | `ADMIN_PASSWORD` | La eliges tú | Contraseña para entrar a `/admin` |
+| `GMAIL_USER` | La cuenta oficial de la PBH | Remitente de los correos de aceptación/rechazo |
+| `GMAIL_APP_PASSWORD` | Ver instrucciones abajo | Autentica el envío por Gmail SMTP |
 
 **En producción (Vercel):** `POSTGRES_URL` se agrega sola al conectar la base de
-datos al proyecto desde la pestaña Storage. `ADMIN_USER` y `ADMIN_PASSWORD` hay
-que añadirlas a mano en Project Settings → Environment Variables.
+datos al proyecto desde la pestaña Storage. Las otras cuatro hay que añadirlas
+a mano en Project Settings → Environment Variables (y darle Redeploy después).
 
 **En local:** crea un archivo `.env.local` (no se sube a git) en la raíz del
 proyecto:
@@ -108,24 +115,45 @@ proyecto:
 POSTGRES_URL="postgres://...que copiaste de Vercel..."
 ADMIN_USER=junta
 ADMIN_PASSWORD=elige-una-contraseña
+GMAIL_USER=penyabhavana@gmail.com
+GMAIL_APP_PASSWORD=contraseña-de-aplicación-de-16-caracteres
 ```
 
-Luego, para crear la tabla una sola vez:
+Luego, para crear/actualizar la tabla:
 
 ```bash
 npm run db:setup
+node --env-file=.env.local scripts/migrate-002-estado.mjs
 ```
+
+### Cómo generar la Contraseña de aplicación de Gmail
+
+**Nunca uses la contraseña normal de la cuenta** — Google permite crear una
+contraseña específica para aplicaciones que solo sirve para enviar/recibir
+correo por SMTP, y se puede revocar en cualquier momento sin afectar el login
+normal de la cuenta.
+
+1. Entra a la cuenta `penyabhavana@gmail.com`
+2. Activa la **verificación en 2 pasos** si no está activa: [myaccount.google.com/signinoptions/two-step-verification](https://myaccount.google.com/signinoptions/two-step-verification)
+3. Ve a [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
+4. Crea una nueva con el nombre "PBH Landing" (o el que prefieras)
+5. Copia el código de 16 caracteres que te da Google — ese es el valor de
+   `GMAIL_APP_PASSWORD`
 
 ### Panel de administración
 
-`/admin` (protegido con usuario/contraseña vía `proxy.ts`) muestra la lista de
-inscripciones ordenadas por fecha, con nombre, correo, teléfono, municipio y
-mensaje. Pensado para que la Junta Directiva revise las solicitudes sin entrar
-al dashboard de Vercel.
+`/admin` (protegido con usuario/contraseña vía `proxy.ts`) muestra cada
+solicitud con todos sus datos (incluido el carné de identidad y la dirección)
+y dos botones, **Aceptar** y **Rechazar** (`app/admin/actions.ts`). Al usarlos:
 
-Pendiente de integración futura: un servicio de email transaccional (p.ej.
-Resend) para notificar a la Junta Directiva por correo cuando llega una
-solicitud nueva, además de guardarla en la base de datos.
+1. Se actualiza el `estado` de la solicitud en la base de datos (`pendiente` →
+   `aceptada` / `rechazada`) junto con la fecha de proceso.
+2. Se envía automáticamente un correo a la persona, desde `GMAIL_USER`, con la
+   plantilla correspondiente (`lib/email.ts`).
+
+Si `GMAIL_USER`/`GMAIL_APP_PASSWORD` no están configuradas, el estado se
+actualiza igual — el envío del correo simplemente falla y queda registrado en
+los logs del servidor, sin bloquear el resto del panel.
 
 ## 6. SEO y rendimiento
 

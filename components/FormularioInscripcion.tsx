@@ -91,6 +91,23 @@ export function FormularioInscripcion() {
               </div>
 
               <div className="sm:col-span-1">
+                <label htmlFor="carnet" className="mb-1.5 block text-sm font-medium text-tinta">
+                  Carné de identidad *
+                </label>
+                <input
+                  id="carnet"
+                  name="carnet"
+                  required
+                  inputMode="numeric"
+                  pattern="[0-9]{11}"
+                  title="11 dígitos, sin espacios ni guiones"
+                  maxLength={11}
+                  className="w-full rounded-xl border border-tinta/15 px-4 py-3 text-sm outline-none transition focus:border-grana"
+                  placeholder="11 dígitos"
+                />
+              </div>
+
+              <div className="sm:col-span-1">
                 <label htmlFor="correo" className="mb-1.5 block text-sm font-medium text-tinta">
                   Correo electrónico *
                 </label>
@@ -115,6 +132,19 @@ export function FormularioInscripcion() {
                   required
                   className="w-full rounded-xl border border-tinta/15 px-4 py-3 text-sm outline-none transition focus:border-grana"
                   placeholder="+53 ..."
+                />
+              </div>
+
+              <div className="sm:col-span-1">
+                <label htmlFor="direccion" className="mb-1.5 block text-sm font-medium text-tinta">
+                  Dirección *
+                </label>
+                <input
+                  id="direccion"
+                  name="direccion"
+                  required
+                  className="w-full rounded-xl border border-tinta/15 px-4 py-3 text-sm outline-none transition focus:border-grana"
+                  placeholder="Calle, número, entre calles"
                 />
               </div>
 
@@ -152,8 +182,8 @@ export function FormularioInscripcion() {
                   className="mt-1 h-4 w-4 rounded border-tinta/30 text-grana focus:ring-grana"
                 />
                 <label htmlFor="terminos" className="text-xs text-tinta/60">
-                  Acepto que la PBH use mis datos para gestionar mi solicitud de
-                  membresía.
+                  Acepto que la PBH use mis datos personales, incluido mi carné
+                  de identidad, para gestionar mi solicitud de membresía.
                 </label>
               </div>
 

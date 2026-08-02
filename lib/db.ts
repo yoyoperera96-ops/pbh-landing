@@ -1,5 +1,7 @@
 import { neon } from "@neondatabase/serverless";
 
+export type EstadoInscripcion = "pendiente" | "aceptada" | "rechazada";
+
 export type Inscripcion = {
   id: number;
   nombre: string;
@@ -7,6 +9,10 @@ export type Inscripcion = {
   telefono: string;
   municipio: string | null;
   mensaje: string | null;
+  carnet_identidad: string | null;
+  direccion: string | null;
+  estado: EstadoInscripcion;
+  procesado_en: string | null;
   creado_en: string;
 };
 
