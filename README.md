@@ -248,9 +248,13 @@ Se construye en fases, cada una publicada y probada por separado:
   - Puntuación verificada con pruebas reales: marcador exacto → 3 puntos,
     mismo signo (1 · X · 2) sin marcador exacto → 1 punto, signo distinto →
     0 puntos.
-- ⏳ **Fase D** (próxima) — tabla de posiciones (`components/ClasificacionQuiniela.tsx`)
-  por nombre de usuario, semana actual por defecto con toggle a temporada
-  completa.
+- ✅ **Fase D** — tabla de posiciones (`components/ClasificacionQuiniela.tsx`),
+  integrada en `/quiniela`. Rankea por `usuario` sumando `puntos` de
+  partidos `jugado`; vista **Esta semana** (lunes-domingo de la semana
+  actual) por defecto, con toggle a **Temporada** completa (`?vista=`).
+  Verificada con dos socios de prueba: el orden y los puntos coinciden, y
+  el filtro semanal excluye correctamente partidos fuera de la semana en
+  curso.
 
 Esquema: `scripts/migrate-005-quiniela.mjs` crea `partidos_quiniela` y
 `predicciones` (una predicción por socio y partido, `UNIQUE (inscripcion_id, partido_id)`).

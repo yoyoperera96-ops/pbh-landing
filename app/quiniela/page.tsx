@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Container } from "@/components/ui/Container";
 import { cerrarSesion } from "@/app/login/actions";
 import { guardarPrediccion } from "./actions";
+import { ClasificacionQuiniela } from "@/components/ClasificacionQuiniela";
 
 export const metadata: Metadata = {
   title: "Quiniela",
@@ -30,9 +31,16 @@ type PartidoConPrediccion = {
   prediccion_visitante: number | null;
 };
 
-export default async function QuinielaPage() {
+export default async function QuinielaPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ vista?: string }>;
+}) {
   const session = await getSession();
   if (!session) redirect("/login");
+
+  const { vista: vistaParam } = await searchParams;
+  const vista = vistaParam === "temporada" ? "temporada" : "semana";
 
   const rows = (await sql`
     SELECT usuario, estado FROM inscripciones WHERE id = ${session.id}
@@ -93,6 +101,10 @@ export default async function QuinielaPage() {
                 puntos por el marcador exacto, 1 punto por acertar el signo
                 (1 · X · 2).
               </p>
+
+              <div className="mt-6">
+                <ClasificacionQuiniela vista={vista} />
+              </div>
 
               <div className="mt-6 space-y-3">
                 {partidos.map((p) => (
