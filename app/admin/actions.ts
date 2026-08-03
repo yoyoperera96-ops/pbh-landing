@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { sql, type EstadoInscripcion } from "@/lib/db";
-import { enviarDecisionInscripcion } from "@/lib/email";
+import { enviarDecisionInscripcion, enviarActivacionCuenta, SITE_URL } from "@/lib/email";
+import { generarTokenActivacion } from "@/lib/auth";
 
 async function procesar(formData: FormData, estado: EstadoInscripcion) {
   const id = Number(formData.get("id"));
@@ -47,4 +48,33 @@ export async function aceptarSolicitud(formData: FormData) {
 
 export async function rechazarSolicitud(formData: FormData) {
   await procesar(formData, "rechazada");
+}
+
+export async function enviarActivacion(formData: FormData) {
+  const id = Number(formData.get("id"));
+  if (!id) return;
+
+  const token = generarTokenActivacion();
+
+  const rows = (await sql`
+    UPDATE inscripciones
+    SET activacion_token = ${token}, activacion_expira = now() + interval '48 hours'
+    WHERE id = ${id} AND estado = 'aceptada' AND usuario IS NULL
+    RETURNING nombre, correo
+  `) as { nombre: string; correo: string }[];
+
+  const inscripcion = rows[0];
+  if (!inscripcion) return;
+
+  try {
+    await enviarActivacionCuenta({
+      nombre: inscripcion.nombre,
+      correo: inscripcion.correo,
+      link: `${SITE_URL}/activar?token=${token}`,
+    });
+  } catch (err) {
+    console.error("No se pudo enviar el email de activación:", err);
+  }
+
+  revalidatePath("/admin");
 }

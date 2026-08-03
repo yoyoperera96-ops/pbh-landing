@@ -14,6 +14,7 @@ export type Inscripcion = {
   direccion: string | null;
   estado: EstadoInscripcion;
   numero_socio: number | null;
+  activacion_expira: string | null;
   procesado_en: string | null;
   creado_en: string;
 };
@@ -50,7 +51,7 @@ export async function getInscripciones({
 
   return sql`
     SELECT id, nombre, usuario, carnet_identidad, correo, telefono, direccion, municipio,
-           mensaje, estado, numero_socio, procesado_en, creado_en
+           mensaje, estado, numero_socio, activacion_expira, procesado_en, creado_en
     FROM inscripciones
     WHERE (${estadoParam}::text IS NULL OR estado = ${estadoParam})
       AND (

@@ -190,6 +190,26 @@ Si `GMAIL_USER`/`GMAIL_APP_PASSWORD` no están configuradas, el estado se
 actualiza igual — el envío del correo simplemente falla y queda registrado en
 los logs del servidor, sin bloquear el resto del panel.
 
+### Activar cuenta para socios ya aceptados
+
+Los peñistas aceptados **antes** de que existiera el registro con
+usuario/contraseña (sección 7, Fase A) no tienen cuenta. Para no pedirles que
+rellenen de nuevo toda la solicitud, cada fila de un socio aceptado sin
+usuario muestra un botón **Enviar acceso** (`app/admin/actions.ts` →
+`enviarActivacion`):
+
+1. Genera un token aleatorio de un solo uso (`activacion_token`, caduca en
+   48h) y lo guarda en su misma fila de `inscripciones` — no crea ningún
+   registro nuevo.
+2. Envía un correo (`lib/email.ts` → `enviarActivacionCuenta`) con un enlace a
+   `/activar?token=...`.
+3. El socio abre el enlace, elige usuario y contraseña (`app/activar/page.tsx`
+   + `app/activar/actions.ts`), y queda con sesión iniciada directamente en
+   `/quiniela`. El token se invalida al usarlo o al caducar.
+
+Si el enlace ya se envió y sigue vigente, el botón cambia a **Reenviar
+acceso** junto a una etiqueta "Acceso enviado".
+
 ## 6. Actualidad del Club (`/actualidad`)
 
 Nueva pestaña con dos cosas:

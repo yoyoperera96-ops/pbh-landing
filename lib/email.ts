@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import { siteConfig } from "./data";
 
-const SITE_URL = "https://penabarcelonista-habana-cuba.vercel.app";
+export const SITE_URL = "https://penabarcelonista-habana-cuba.vercel.app";
 
 function getTransporter() {
   if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
@@ -80,6 +80,44 @@ function plantillaRechazada(nombre: string) {
     <p>Gracias por tu pasión por el barcelonismo.</p>
     `
   );
+}
+
+function plantillaActivacion(nombre: string, link: string) {
+  return layout(
+    `Hola, ${nombre}`,
+    `
+    <p>Ya eres socio de la <strong>Peña Barcelonista de La Habana</strong> y
+    ahora puedes crear tu acceso a la web para participar en la
+    <strong>quiniela</strong> y las próximas funcionalidades exclusivas para
+    peñistas.</p>
+    <p style="text-align:center;margin:28px 0;">
+      <a href="${link}" style="background:#9C1C3A;color:#ffffff;text-decoration:none;padding:14px 28px;border-radius:999px;font-weight:bold;font-size:14px;display:inline-block;">
+        Crear mi acceso
+      </a>
+    </p>
+    <p style="font-size:13px;color:#1A223399;">Este enlace es personal y caduca en 48 horas. Si tú no
+    solicitaste este correo, puedes ignorarlo.</p>
+    `
+  );
+}
+
+export async function enviarActivacionCuenta({
+  nombre,
+  correo,
+  link,
+}: {
+  nombre: string;
+  correo: string;
+  link: string;
+}) {
+  const transporter = getTransporter();
+
+  await transporter.sendMail({
+    from: `"Peña Barcelonista de La Habana" <${process.env.GMAIL_USER}>`,
+    to: correo,
+    subject: "Crea tu acceso a la web de la Peña Barcelonista de La Habana",
+    html: plantillaActivacion(nombre, link),
+  });
 }
 
 export async function enviarDecisionInscripcion({

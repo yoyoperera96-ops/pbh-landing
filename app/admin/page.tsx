@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getInscripciones, type Inscripcion } from "@/lib/db";
-import { aceptarSolicitud, rechazarSolicitud } from "./actions";
+import { aceptarSolicitud, rechazarSolicitud, enviarActivacion } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -53,6 +53,30 @@ function AccionesSolicitud({ id }: { id: number }) {
         </button>
       </form>
     </div>
+  );
+}
+
+function AccesoAccion({ i }: { i: Inscripcion }) {
+  if (i.estado !== "aceptada" || i.usuario) return null;
+
+  const activacionVigente =
+    i.activacion_expira && new Date(i.activacion_expira) > new Date();
+
+  return (
+    <form action={enviarActivacion} className="mt-3 flex items-center gap-2">
+      <input type="hidden" name="id" value={i.id} />
+      {activacionVigente && (
+        <span className="rounded-full bg-blau/10 px-3 py-1 text-xs font-semibold text-blau">
+          Acceso enviado
+        </span>
+      )}
+      <button
+        type="submit"
+        className="rounded-full border border-dorado px-4 py-1.5 text-xs font-semibold text-dorado hover:bg-dorado/10"
+      >
+        {activacionVigente ? "Reenviar acceso" : "Enviar acceso"}
+      </button>
+    </form>
   );
 }
 
@@ -204,6 +228,7 @@ export default async function AdminPage({
                   <div>{i.municipio || "—"}</div>
                 </dl>
                 {i.estado === "pendiente" && <AccionesSolicitud id={i.id} />}
+                <AccesoAccion i={i} />
               </div>
             ))}
 
@@ -272,6 +297,7 @@ export default async function AdminPage({
                     {i.procesado_en ? formatter.format(new Date(i.procesado_en)) : "—"}
                   </p>
                 )}
+                <AccesoAccion i={i} />
               </div>
             ))}
 
