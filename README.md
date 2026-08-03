@@ -231,15 +231,23 @@ Se construye en fases, cada una publicada y probada por separado:
   - `/quiniela`: cada socio aceptado predice marcador local/visitante por
     partido (`app/quiniela/actions.ts` → `guardarPrediccion`), editable
     mientras el partido siga `programado` y no haya empezado.
-- ⏳ **Fase C** (próxima) — captura del resultado final y cálculo de puntos.
-  El marcador **no** viene en datos estructurados como sí las fechas; solo el
-  último partido jugado trae marcador en HTML plano
-  (`lib/fcbFixtures.ts` → `getUltimoResultado()`, ya implementada y probada
-  contra la web real). Por eso el resultado se revisa de a un partido a la
-  vez; para partidos que se completen entre una revisión y otra, o si
-  fcbarcelona.com cambia de formato, `/admin/quiniela` tendrá edición manual
-  del marcador como respaldo — imprescindible, no opcional, al haber puntos
-  reales en juego.
+- ✅ **Fase C** — captura del resultado final y cálculo de puntos.
+  - **Actualizar resultados** (`app/admin/quiniela/actions.ts` →
+    `actualizarResultadoAutomatico`): lee el marcador del último partido
+    jugado desde fcbarcelona.com (`lib/fcbFixtures.ts` →
+    `getUltimoResultado()` — el marcador no viene en datos estructurados
+    como sí las fechas, solo el último partido lo trae en HTML plano; por
+    eso se revisa de a un partido a la vez) y, si coincide con un partido
+    `programado` de nuestra tabla, guarda el marcador y calcula los puntos
+    de todas las predicciones de ese partido.
+  - **Edición manual del marcador** en cada partido de `/admin/quiniela`
+    (`guardarResultadoManual`) — respaldo imprescindible si dos partidos se
+    completan entre una revisión y otra, o si fcbarcelona.com cambia de
+    formato; también sirve para corregir un resultado ya guardado
+    (recalcula los puntos automáticamente).
+  - Puntuación verificada con pruebas reales: marcador exacto → 3 puntos,
+    mismo signo (1 · X · 2) sin marcador exacto → 1 punto, signo distinto →
+    0 puntos.
 - ⏳ **Fase D** (próxima) — tabla de posiciones (`components/ClasificacionQuiniela.tsx`)
   por nombre de usuario, semana actual por defecto con toggle a temporada
   completa.

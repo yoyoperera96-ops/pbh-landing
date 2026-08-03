@@ -21,6 +21,7 @@ export async function GET(req: NextRequest) {
   const headers = [
     "Número de socio",
     "Nombre",
+    "Usuario",
     "Carné de identidad",
     "Correo",
     "Teléfono",
@@ -35,6 +36,7 @@ export async function GET(req: NextRequest) {
   const rows = inscripciones.map((i) => [
     i.numero_socio ?? "",
     i.nombre,
+    i.usuario ?? "",
     i.carnet_identidad ?? "",
     i.correo,
     i.telefono,

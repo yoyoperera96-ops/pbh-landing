@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
+import { sql } from "@/lib/db";
 import { iniciarSesion } from "./actions";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -16,7 +17,12 @@ export default async function LoginPage({
   searchParams: Promise<{ error?: string }>;
 }) {
   const session = await getSession();
-  if (session) redirect("/quiniela");
+  if (session) {
+    // Verifica que la cuenta siga existiendo antes de redirigir — evita un
+    // ciclo con /quiniela si la sesión quedó "huérfana" (cuenta borrada).
+    const rows = (await sql`SELECT id FROM inscripciones WHERE id = ${session.id}`) as { id: number }[];
+    if (rows[0]) redirect("/quiniela");
+  }
 
   const { error } = await searchParams;
 

@@ -194,6 +194,7 @@ export default async function AdminPage({
                   <EstadoBadges i={i} />
                 </div>
                 <dl className="mt-3 space-y-1 text-xs text-tinta/70">
+                  <div>{i.usuario || "—"}</div>
                   <div>
                     <a href={`mailto:${i.correo}`} className="text-blau hover:underline">
                       {i.correo}
@@ -227,6 +228,10 @@ export default async function AdminPage({
                 </div>
 
                 <dl className="mt-4 grid grid-cols-1 gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
+                  <div>
+                    <dt className="text-tinta/50">Usuario</dt>
+                    <dd>{i.usuario || "—"}</dd>
+                  </div>
                   <div>
                     <dt className="text-tinta/50">Carné de identidad</dt>
                     <dd>{i.carnet_identidad || "—"}</dd>

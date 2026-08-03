@@ -5,6 +5,7 @@ export type EstadoInscripcion = "pendiente" | "aceptada" | "rechazada";
 export type Inscripcion = {
   id: number;
   nombre: string;
+  usuario: string | null;
   correo: string;
   telefono: string;
   municipio: string | null;
@@ -48,13 +49,14 @@ export async function getInscripciones({
   const estadoParam = estado && estado !== "todas" ? estado : null;
 
   return sql`
-    SELECT id, nombre, carnet_identidad, correo, telefono, direccion, municipio,
+    SELECT id, nombre, usuario, carnet_identidad, correo, telefono, direccion, municipio,
            mensaje, estado, numero_socio, procesado_en, creado_en
     FROM inscripciones
     WHERE (${estadoParam}::text IS NULL OR estado = ${estadoParam})
       AND (
         ${qParam}::text IS NULL OR
         nombre ILIKE '%' || ${qParam} || '%' OR
+        usuario ILIKE '%' || ${qParam} || '%' OR
         correo ILIKE '%' || ${qParam} || '%' OR
         telefono ILIKE '%' || ${qParam} || '%' OR
         carnet_identidad ILIKE '%' || ${qParam} || '%' OR
