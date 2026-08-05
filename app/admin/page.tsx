@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getInscripciones, type Inscripcion } from "@/lib/db";
 import { aceptarSolicitud, rechazarSolicitud, enviarActivacion } from "./actions";
+import { BotonEliminar } from "./BotonEliminar";
 
 export const dynamic = "force-dynamic";
 
@@ -229,6 +230,9 @@ export default async function AdminPage({
                 </dl>
                 {i.estado === "pendiente" && <AccionesSolicitud id={i.id} />}
                 <AccesoAccion i={i} />
+                <div className="mt-3">
+                  <BotonEliminar id={i.id} nombre={i.nombre} />
+                </div>
               </div>
             ))}
 
@@ -298,6 +302,9 @@ export default async function AdminPage({
                   </p>
                 )}
                 <AccesoAccion i={i} />
+                <div className="mt-3">
+                  <BotonEliminar id={i.id} nombre={i.nombre} />
+                </div>
               </div>
             ))}
 

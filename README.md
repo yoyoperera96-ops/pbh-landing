@@ -185,6 +185,11 @@ El panel además tiene:
 - **Exportar CSV**: descarga los resultados actualmente filtrados
   (`/api/admin/export`, protegido igual que `/admin`), listo para abrir en
   Excel/Sheets — incluye número de socio, carné, contacto, estado y fechas.
+- **Eliminar**: borra definitivamente una solicitud (`eliminarSolicitud` en
+  `app/admin/actions.ts`), pensado para limpiar registros duplicados cuando un
+  peñista se inscribe dos veces. Pide confirmación antes de enviar el
+  formulario (`app/admin/BotonEliminar.tsx`) porque no se puede deshacer;
+  disponible en cualquier estado (pendiente/aceptada/rechazada).
 
 Si `GMAIL_USER`/`GMAIL_APP_PASSWORD` no están configuradas, el estado se
 actualiza igual — el envío del correo simplemente falla y queda registrado en

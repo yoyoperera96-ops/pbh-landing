@@ -42,6 +42,18 @@ async function procesar(formData: FormData, estado: EstadoInscripcion) {
   revalidatePath("/admin");
 }
 
+export async function eliminarSolicitud(formData: FormData) {
+  const id = Number(formData.get("id"));
+  if (!id) return;
+
+  // Si la solicitud duplicada llegó a tener predicciones (cuenta activada
+  // por error), se borran primero por la referencia en predicciones.partido_id.
+  await sql`DELETE FROM predicciones WHERE inscripcion_id = ${id}`;
+  await sql`DELETE FROM inscripciones WHERE id = ${id}`;
+
+  revalidatePath("/admin");
+}
+
 export async function aceptarSolicitud(formData: FormData) {
   await procesar(formData, "aceptada");
 }
